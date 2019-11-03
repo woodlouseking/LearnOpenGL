@@ -83,6 +83,8 @@ int main()
         return -1;
     }
     
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
     
     // 三角形顶点的处理
     GLuint VAO, VBO;
@@ -95,7 +97,7 @@ int main()
                  sizeof(LEARN_OPEN_GL::vertices),
                  LEARN_OPEN_GL::vertices,
                  GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
