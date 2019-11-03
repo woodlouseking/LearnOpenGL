@@ -16,10 +16,17 @@ namespace LEARN_OPEN_GL {
     const int SCR_HEIGHT = 600;
     const char SCR_TLE[] = "LearnOpenGL";
     const float vertices[] = {
-        -0.5f, -0.5f, 0.0f, // 左下角
-        0.5f, -0.5f, 0.0f, // 右下角
-        0.0f, 0.5f, 0.0f //顶角
+        //第一个三角形
+        -0.9f, -0.5f, 0.0f, // 左下角
+        0.0f, -0.5f, 0.0f, // 右下角
+        -0.5f, 0.5f, 0.0f, //顶角
+        
+        //第二个三角形
+        -0.0f, -0.5f, 0.0f, //左下角
+        0.9f, -0.5f, 0.0f, //右下角
+        0.5f, 0.5f, 0.0f //顶角
     };
+
     const char *vertexShaderSource = "#version 330 core\n"
                 "layout (location=0) in vec3 aPos;\n"
                 "void main(){\n"
