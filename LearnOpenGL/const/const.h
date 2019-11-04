@@ -24,8 +24,6 @@ namespace LEARN_OPEN_GL {
         -0.5f, 0.5f, 0.0f, //左上角
         0.5f, -0.5f, 0.0f, // 右下角
         0.5f, 0.5f, 0.0f //右上角
-        
-        
     };
 
     const char *vertexShaderSource = "#version 330 core\n"
