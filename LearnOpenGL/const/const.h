@@ -29,6 +29,18 @@ namespace LEARN_OPEN_GL {
         1, 2, 3  // 第二个三角形
     };
 
+    //定义两个三角形
+    const float firstTriangle[] = {
+        -0.9f, -0.5f, 0.0f,
+         0.0f, -0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f
+    };
+    const float secondTriangle[] = {
+         0.9f, -0.5f, 0.0f,
+         0.0f, -0.5f, 0.0f,
+         0.5f,  0.5f, 0.0f
+    };
+
     const char *vertexShaderSource = "#version 330 core\n"
                 "layout (location=0) in vec3 aPos;\n"
                 "void main(){\n"
