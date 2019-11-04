@@ -20,10 +20,13 @@ namespace LEARN_OPEN_GL {
         -0.5f, -0.5f, 0.0f, // 左下角
         -0.5f, 0.5f, 0.0f, //左上角
         0.5f, -0.5f, 0.0f, // 右下角
-        
-        -0.5f, 0.5f, 0.0f, //左上角
-        0.5f, -0.5f, 0.0f, // 右下角
         0.5f, 0.5f, 0.0f //右上角
+    };
+
+    //索引定义
+    const unsigned int indices[] = {
+        0, 1, 2, // 第一个三角形
+        1, 2, 3  // 第二个三角形
     };
 
     const char *vertexShaderSource = "#version 330 core\n"
