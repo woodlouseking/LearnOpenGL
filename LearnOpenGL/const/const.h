@@ -75,6 +75,7 @@ namespace LEARN_OPEN_GL {
     // 定义顶点颜色
     // 一个三角形的顶点定义
     const float verteciesWithColor[] = {
+            //位置坐标              颜色属性
         -0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,// 左下角
          0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,// 右下角
          0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f// 顶角
