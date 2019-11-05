@@ -50,8 +50,8 @@ int main()
 //    twoTriangleByDifferentAB render; // 使用不同的VAO VBO绘制两个三角行
 //    drawRectangleByIndex render; // 使用索引绘制一个矩形
 //    drawTriangle render; // 绘制三角形
-    neighborTriangle render; // 绘制相邻两个三角形
-    
+//    neighborTriangle render; // 绘制相邻两个三角形
+    drawTriangleWithColor render; // 绘制指定顶点颜色的三角形
     render.init();
     
     while (!glfwWindowShouldClose(window)) {

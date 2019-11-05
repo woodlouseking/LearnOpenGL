@@ -273,7 +273,9 @@ void twoTriangleByDifferentAB::_bindData()
     glBindVertexArray(0);
 }
 
-//with color
+/*
+    ** 为三角形顶点配置上颜色
+*/
 void drawTriangleWithColor::init()
 {
     _initShader(LEARN_OPEN_GL::vertexWithColorShaderSource, LEARN_OPEN_GL::framentWithColorShaderSource);
