@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9AA5EFBF2371C4AA0020ECE8 /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5EFBD2371C4AA0020ECE8 /* render.cpp */; };
 		9ACE3195236D8A8300321C8C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE3194236D8A8300321C8C /* main.cpp */; };
 		9ACE3198236D8AB600321C8C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE3197236D8AB600321C8C /* OpenGL.framework */; };
 		9ACE319B236D8AC400321C8C /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE3199236D8AC400321C8C /* libGLEW.2.1.0.dylib */; };
@@ -29,6 +30,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9AA5EFBD2371C4AA0020ECE8 /* render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render.cpp; sourceTree = "<group>"; };
+		9AA5EFBE2371C4AA0020ECE8 /* render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render.h; sourceTree = "<group>"; };
 		9ACE318A236D8A6100321C8C /* LearnOpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LearnOpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ACE3194236D8A8300321C8C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9ACE3197236D8AB600321C8C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -53,6 +56,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9AA5EFBC2371C4AA0020ECE8 /* render */ = {
+			isa = PBXGroup;
+			children = (
+				9AA5EFBD2371C4AA0020ECE8 /* render.cpp */,
+				9AA5EFBE2371C4AA0020ECE8 /* render.h */,
+			);
+			path = render;
+			sourceTree = "<group>";
+		};
 		9ACE3181236D8A6100321C8C = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +89,7 @@
 				9ACE31A8236D8C9300321C8C /* const */,
 				9ACE31A2236D8B7100321C8C /* lib */,
 				9ACE3194236D8A8300321C8C /* main.cpp */,
+				9AA5EFBC2371C4AA0020ECE8 /* render */,
 			);
 			path = LearnOpenGL;
 			sourceTree = "<group>";
@@ -163,6 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AA5EFBF2371C4AA0020ECE8 /* render.cpp in Sources */,
 				9ACE3195236D8A8300321C8C /* main.cpp in Sources */,
 				9ACE31A4236D8B7100321C8C /* glad.c in Sources */,
 			);

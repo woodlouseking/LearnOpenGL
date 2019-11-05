@@ -9,13 +9,14 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "const/const.h"
+#include "render/render.h"
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 
 int main()
-{
+{   
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -46,102 +47,23 @@ int main()
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     
-    // 顶点着色器的处理
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &LEARN_OPEN_GL::vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-    int success;
-    char infoLog[LEARN_OPEN_GL::LOG_INFO_LEN];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        // 获取编译信息
-        glGetShaderInfoLog(vertexShader, LEARN_OPEN_GL::LOG_INFO_LEN, NULL, infoLog);
-        std::cout<<"Compile vertex shader failed : info "<<infoLog<<std::endl;
-        return -1;
-    }
+//    twoTriangleByDifferentAB render; // 使用不同的VAO VBO绘制两个三角行
+//    drawRectangleByIndex render; // 使用索引绘制一个矩形
+//    drawTriangle render; // 绘制三角形
+    neighborTriangle render; // 绘制相邻两个三角形
     
-    // 片段着色器的编译
-    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &LEARN_OPEN_GL::fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(fragmentShader, LEARN_OPEN_GL::LOG_INFO_LEN, NULL, infoLog);
-        std::cout<<"Compile fragment shader failed:info"<<infoLog<<std::endl;
-        return -1;
-    }
-    
-    // 着色器程序
-    GLuint shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-    glGetShaderiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(shaderProgram, LEARN_OPEN_GL::LOG_INFO_LEN, NULL, infoLog);
-        std::cout<<"Link shader failed : info " <<infoLog<<std::endl;
-        return -1;
-    }
-    
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-    
-    // 三角形顶点的处理，使用索引缓存
-    GLuint VAOs[2], VBOs[2]; //, EBO;
-    glGenVertexArrays(2, VAOs);
-    glGenBuffers(2, VBOs);
-//    glGenBuffers(1, &EBO);
-    
-    glBindVertexArray(VAOs[0]);
-    glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
-    glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(LEARN_OPEN_GL::firstTriangle),
-                 LEARN_OPEN_GL::firstTriangle,
-                 GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    
-    glBindVertexArray(VAOs[1]);
-    glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);
-    glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(LEARN_OPEN_GL::secondTriangle),
-                 LEARN_OPEN_GL::secondTriangle,
-                 GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    
-    //  绑定缓存
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-//    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-//                 sizeof(LEARN_OPEN_GL::indices),
-//                 LEARN_OPEN_GL::indices,
-//                 GL_STATIC_DRAW);
-    
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    render.init();
     
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
-//        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // 开启线框模式
-        glClearColor(0.5f, 0.2, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
         
-        glUseProgram(shaderProgram);
-        glBindVertexArray(VAOs[0]);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        
-        glBindVertexArray(VAOs[1]);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        render.draw();
         
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
     
-    glDeleteVertexArrays(2, VAOs);
-    glDeleteBuffers(2, VBOs);
-//    glDeleteBuffers(1, &EBO);
+    render.clear();
     
     glfwTerminate();
     return 0;
