@@ -9,51 +9,12 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-//#include "const.h"
 #include "render.h"
 
 // 编译着色器
 void render::_initShader(const char *vertexShaderSource, const char *fragmentShaderSource)
 {
-    // 顶点着色器的处理
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-    int success;
-    char infoLog[LEARN_OPEN_GL::LOG_INFO_LEN];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        // 获取编译信息
-        glGetShaderInfoLog(vertexShader, LEARN_OPEN_GL::LOG_INFO_LEN, NULL, infoLog);
-        std::cout<<"Compile vertex shader failed : info "<<infoLog<<std::endl;
-        return;
-    }
-
-    // 片段着色器的编译
-    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(fragmentShader, LEARN_OPEN_GL::LOG_INFO_LEN, NULL, infoLog);
-        std::cout<<"Compile fragment shader failed:info"<<infoLog<<std::endl;
-        return;
-    }
-
-    // 着色器程序
-    m_shaderProgram = glCreateProgram();
-    glAttachShader(m_shaderProgram, vertexShader);
-    glAttachShader(m_shaderProgram, fragmentShader);
-    glLinkProgram(m_shaderProgram);
-    glGetProgramiv(m_shaderProgram, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(m_shaderProgram, LEARN_OPEN_GL::LOG_INFO_LEN, NULL, infoLog);
-        std::cout<<"Link shader failed : info " <<infoLog<<std::endl;
-        return;
-    }
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    m_pShader = new LEARN_OPEN_GL::Shader(vertexShaderSource, fragmentShaderSource);
 }
 
 void render::clearScreen()
@@ -98,7 +59,8 @@ void drawTriangle::draw()
 {
     clearScreen();
     
-    glUseProgram(m_shaderProgram);
+//    glUseProgram(m_shaderProgram);
+    m_pShader->use();
     
     glBindVertexArray(m_VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -146,7 +108,7 @@ void neighborTriangle::draw()
 {
     clearScreen();
     
-    glUseProgram(m_shaderProgram);
+    m_pShader->use();
     
     glBindVertexArray(m_VAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -176,7 +138,7 @@ void drawRectangleByIndex::draw()
     
     clearScreen();
     
-    glUseProgram(m_shaderProgram);
+    m_pShader->use();
     glBindVertexArray(m_VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
 }
@@ -231,7 +193,7 @@ void twoTriangleByDifferentAB::draw()
     
     clearScreen();
     
-    glUseProgram(m_shaderProgram);
+    m_pShader->use();
     glBindVertexArray(m_VAOs[0]);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
@@ -273,12 +235,11 @@ void twoTriangleByDifferentAB::_bindData()
     glBindVertexArray(0);
 }
 
-/*
-    ** 为三角形顶点配置上颜色
-*/
+//with color
 void drawTriangleWithColor::init()
 {
-    _initShader(LEARN_OPEN_GL::vertexWithColorShaderSource, LEARN_OPEN_GL::framentWithColorShaderSource);
+//    _initShader(LEARN_OPEN_GL::vertexWithColorShaderSource, LEARN_OPEN_GL::framentWithColorShaderSource);
+    _initShader("resources/shader/1_withColor.vs", "resources/shader/1_withColor.fs");
     _bindData();
 }
 
@@ -311,7 +272,8 @@ void drawTriangleWithColor::draw()
 {
     clearScreen();
     
-    glUseProgram(m_shaderProgram);
+//    glUseProgram(m_shaderProgram);
+    m_pShader->use();
     
     glBindVertexArray(m_VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);

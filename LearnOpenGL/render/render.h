@@ -10,9 +10,12 @@
 #define my_render_h
 
 #include "const.h"
+#include "shader.h"
 
 class render{
 public:
+    render():m_pShader(NULL){};
+    
     //初始化
     virtual void init() = 0;
     // 渲染
@@ -20,14 +23,20 @@ public:
     //清理
     virtual void clear() = 0;
 
-    virtual ~render() {};
+    virtual ~render() {
+        if (m_pShader) {
+            delete m_pShader;
+            m_pShader = NULL;
+        }
+    };
 
 protected:
-    virtual void _initShader(const char *vertexShaderSource = LEARN_OPEN_GL::vertexShaderSource, const char *fragmentShaderSource=LEARN_OPEN_GL::fragmentShaderSource);
+    virtual void _initShader(const char *vertexShaderSource = "resources/shader/0_common.vs", const char *fragmentShaderSource="resources/shader/0_common.fs");
     virtual void clearScreen();
 
 protected:
-    GLuint m_shaderProgram;
+    //封装后的的shader
+    LEARN_OPEN_GL::Shader *m_pShader;
 };
 
 //绘制三角形
