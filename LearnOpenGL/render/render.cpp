@@ -45,9 +45,9 @@ void render::_initShader(const char *vertexShaderSource, const char *fragmentSha
     glAttachShader(m_shaderProgram, vertexShader);
     glAttachShader(m_shaderProgram, fragmentShader);
     glLinkProgram(m_shaderProgram);
-    glGetShaderiv(m_shaderProgram, GL_LINK_STATUS, &success);
+    glGetProgramiv(m_shaderProgram, GL_LINK_STATUS, &success);
     if (!success) {
-        glGetShaderInfoLog(m_shaderProgram, LEARN_OPEN_GL::LOG_INFO_LEN, NULL, infoLog);
+        glGetProgramInfoLog(m_shaderProgram, LEARN_OPEN_GL::LOG_INFO_LEN, NULL, infoLog);
         std::cout<<"Link shader failed : info " <<infoLog<<std::endl;
         return;
     }
