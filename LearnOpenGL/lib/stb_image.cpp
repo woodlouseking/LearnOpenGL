@@ -2,8 +2,9 @@
 //  stb_image.cpp
 //  LearnOpenGL
 //
-//  Created by 王海平 on 2019/11/9.
+//  Created by www on 2019/11/9.
 //  Copyright © 2019 woodlouse. All rights reserved.
 //
 
-#include <stdio.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"

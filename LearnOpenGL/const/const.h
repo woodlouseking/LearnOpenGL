@@ -48,6 +48,16 @@ namespace LEARN_OPEN_GL {
         1, 2, 3  // 第二个三角形
     };
 
+    // 纹理矩形
+    // 矩形的顶点、索引定义
+    const float verticesForRectWithTex[] = {
+            //位置               颜色               纹理坐标
+        -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, // 左下角
+        -0.5f, 0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   0.0f, 1.0f,//左上角
+        0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,   1.0f, 0.0f,// 右下角
+        0.5f, 0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   1.0f, 1.0f//右上角
+    };
+
     //使用不同VAO VBO绘制的两个三角形定义
     const float firstTriangle[] = {
         -0.9f, -0.5f, 0.0f,
