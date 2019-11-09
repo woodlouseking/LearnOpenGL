@@ -84,6 +84,20 @@ private:
     GLuint m_EBO;
 };
 
+// 绘制带纹理的矩形
+class drawRectanleWithTex : public render{
+public:
+    void init() override;
+    void draw() override;
+    void clear() override;
+private:
+    void _bindData();
+private:
+    GLuint m_VAO;
+    GLuint m_VBO;
+    GLuint m_EBO;
+};
+
 //使用不同的VAO VBO绘制两个三角形
 class twoTriangleByDifferentAB : public render {
 public:

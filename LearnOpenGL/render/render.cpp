@@ -177,6 +177,74 @@ void drawRectangleByIndex::_bindData()
     glBindVertexArray(0);
 }
 
+/*
+ ** 使用h索引绘制带纹理的矩形，纹理的处理暂且在main函数中
+ */
+void drawRectanleWithTex::init()
+{
+    _initShader("resources/shader/4_1_tex.vs", "resources/shader/4_1_tex.fs");
+    _bindData();
+}
+
+//绑定数据
+void drawRectanleWithTex::_bindData()
+{
+    // 生成对象
+    glGenVertexArrays(1, &m_VAO);
+    glGenBuffers(1, &m_VBO);
+    glGenBuffers(1, &m_EBO);
+    
+    // 绑定
+    glBindVertexArray(m_VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+    
+    //拷贝数据
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(LEARN_OPEN_GL::verticesForRectWithTex),
+                 LEARN_OPEN_GL::verticesForRectWithTex,
+                 GL_STATIC_DRAW);
+    
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                 sizeof(LEARN_OPEN_GL::indices),
+                 LEARN_OPEN_GL::indices,
+                 GL_STATIC_DRAW);
+    
+    // 绑定数据
+    // 位置数据
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    
+    //颜色数据
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3*sizeof(float)));
+    glEnableVertexAttribArray(1);
+    
+    //坐标数据
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
+    glEnableVertexAttribArray(2);
+    
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void drawRectanleWithTex::draw()
+{
+    clearScreen();
+    
+    m_pShader->use();
+    
+    glBindVertexArray(m_VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
+
+void drawRectanleWithTex::clear()
+{
+    glDeleteVertexArrays(1, &m_VAO);
+    glDeleteBuffers(1, &m_VBO);
+    glDeleteBuffers(1, &m_EBO);
+}
+
 
 /*
  ** 使用不同的VAO/VBO绘制两个三角形
