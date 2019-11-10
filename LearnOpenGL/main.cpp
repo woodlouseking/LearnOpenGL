@@ -54,7 +54,8 @@ int main()
 //    drawTriangle render; // 绘制三角形
 //    neighborTriangle render; // 绘制相邻两个三角形
 //    drawTriangleWithColor render; // 绘制指定顶点颜色的三角形
-    drawRectanleWithTex render;
+//    drawRectanleWithTex render; // 使用箱子纹理
+    drawRectanleWithTwoTex render; // 使用箱子和笑脸的纹理
     render.init();
     
     while (!glfwWindowShouldClose(window)) {

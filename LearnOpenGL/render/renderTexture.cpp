@@ -26,6 +26,7 @@ renderTexture::renderTexture(const char *texPath, int format)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     
     //读取图片数据
+    stbi_set_flip_vertically_on_load(true);
     int width, height, nrChannels;
     unsigned char *data = stbi_load(texPath, &width, &height, &nrChannels, 0);
     if (data) {
