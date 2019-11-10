@@ -12,6 +12,8 @@
 #include "const.h"
 #include "shader.h"
 
+class renderTexture;
+
 class render{
 public:
     render():m_pShader(NULL){};
@@ -96,6 +98,8 @@ private:
     GLuint m_VAO;
     GLuint m_VBO;
     GLuint m_EBO;
+    
+    renderTexture *m_pTex;
 };
 
 //使用不同的VAO VBO绘制两个三角形

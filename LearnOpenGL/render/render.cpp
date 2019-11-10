@@ -186,7 +186,7 @@ void drawRectanleWithTex::init()
     _initShader("resources/shader/4_1_tex.vs", "resources/shader/4_1_tex.fs");
     _bindData();
     //设置渲染图片
-    renderTexture tex("resources/textures/container.jpg", GL_RGB);
+    m_pTex = new renderTexture("resources/textures/container.jpg", GL_RGB);
 }
 
 //绑定数据
@@ -246,6 +246,10 @@ void drawRectanleWithTex::clear()
     glDeleteVertexArrays(1, &m_VAO);
     glDeleteBuffers(1, &m_VBO);
     glDeleteBuffers(1, &m_EBO);
+    if (m_pTex) {
+        delete m_pTex;
+        m_pTex = NULL;
+    }
 }
 
 
