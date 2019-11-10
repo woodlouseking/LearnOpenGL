@@ -10,6 +10,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "render.h"
+#include "renderTexture.h"
 
 // 编译着色器
 void render::_initShader(const char *vertexShaderSource, const char *fragmentShaderSource)
@@ -184,6 +185,8 @@ void drawRectanleWithTex::init()
 {
     _initShader("resources/shader/4_1_tex.vs", "resources/shader/4_1_tex.fs");
     _bindData();
+    //设置渲染图片
+    renderTexture tex("resources/textures/container.jpg", GL_RGB);
 }
 
 //绑定数据

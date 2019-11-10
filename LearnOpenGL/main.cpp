@@ -49,28 +49,6 @@ int main()
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     
-    
-    // 读取图片
-    int width, height, nrChannels;
-    unsigned char *data = stbi_load("resources/textures/container.jpg", &width, &height, &nrChannels, 0);
-    
-    unsigned int texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    
-    //设置环绕方式
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // 设置过滤方式
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    //设置数据
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    
-    //释放图片数据
-    stbi_image_free(data);
-    
 //    twoTriangleByDifferentAB render; // 使用不同的VAO VBO绘制两个三角行
 //    drawRectangleByIndex render; // 使用索引绘制一个矩形
 //    drawTriangle render; // 绘制三角形
