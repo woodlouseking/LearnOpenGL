@@ -12,6 +12,9 @@
 #include "render/render.h"
 #include <iostream>
 #include "shader.h"
+#include "glm.hpp"
+#include "matrix_transform.hpp"
+#include "type_ptr.hpp"
 #include "stb_image.h"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
@@ -55,7 +58,8 @@ int main()
 //    neighborTriangle render; // 绘制相邻两个三角形
 //    drawTriangleWithColor render; // 绘制指定顶点颜色的三角形
 //    drawRectanleWithTex render; // 使用箱子纹理
-    drawRectanleWithTwoTex render; // 使用箱子和笑脸的纹理
+//    drawRectanleWithTwoTex render; // 使用箱子和笑脸的纹理
+    drawRectanleWithGLM render;  // 矩阵变幻
     render.init();
     
     while (!glfwWindowShouldClose(window)) {

@@ -121,6 +121,24 @@ private:
 };
 
 
+// 绘制两个纹理的矩形 使用GLM库进行矩阵相关的运算
+class drawRectanleWithGLM : public render{
+public:
+    void init() override;
+    void draw() override;
+    void clear() override;
+private:
+    void _bindData();
+private:
+    GLuint m_VAO;
+    GLuint m_VBO;
+    GLuint m_EBO;
+    
+    renderTexture *m_pTex1;
+    renderTexture *m_pTex2;
+};
+
+
 //使用不同的VAO VBO绘制两个三角形
 class twoTriangleByDifferentAB : public render {
 public:
