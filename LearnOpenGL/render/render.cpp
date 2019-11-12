@@ -460,6 +460,13 @@ void drawRectanleWithGLM::init()
     m_pShader->use();
     m_pShader->setInt("texture1", 0);
     m_pShader->setInt("texture2", 1);
+    
+    glm::mat4 trans(1.0f);
+    trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+    
+    unsigned int loc = glGetUniformLocation(m_pShader->ID, "transform");
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(trans));
 }
 
 void drawRectanleWithGLM::_bindData()
@@ -512,16 +519,7 @@ void drawRectanleWithGLM::draw()
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, m_pTex2->textureId);
     
-    // 变幻矩阵
-    glm::mat4 trans(1.0f);
-    trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
-    
     m_pShader->use();
-    
-    //设置trans
-    unsigned int transformLocation = glGetUniformLocation(m_pShader->ID, "transform");
-    glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(trans));
     
     glBindVertexArray(m_VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
