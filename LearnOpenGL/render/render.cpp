@@ -667,6 +667,9 @@ void draw3D_cube::init()
     m_pShader->use();
     m_pShader->setInt("texture1", 0);
     m_pShader->setInt("texture2", 1);
+    
+    //开启Z缓冲
+    glEnable(GL_DEPTH_TEST);
 }
 
 void draw3D_cube::_bindData()
@@ -701,6 +704,9 @@ void draw3D_cube::_bindData()
 void draw3D_cube::draw()
 {
     clearScreen();
+    
+    //清除深度缓冲
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_pTex1->textureId);
