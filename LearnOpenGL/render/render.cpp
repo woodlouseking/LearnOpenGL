@@ -759,3 +759,128 @@ void draw3D_cube::clear()
         m_pTex2 = NULL;
     }
 }
+
+
+/*
+ ** 3D 10个cube
+ */
+void draw3D_moreCube::init()
+{
+    _initShader("resources/shader/5_2_cube.vs", "resources/shader/5_2_cube.fs");
+    _bindData();
+    m_pTex1 = new renderTexture("resources/textures/container.jpg", GL_RGB);
+    m_pTex2 = new renderTexture("resources/textures/awesomeface.png", GL_RGBA);
+    
+    m_pShader->use();
+    m_pShader->setInt("texture1", 0);
+    m_pShader->setInt("texture2", 1);
+    
+    //开启Z缓冲
+    glEnable(GL_DEPTH_TEST);
+}
+
+void draw3D_moreCube::_bindData()
+{
+    // 生成对象
+    glGenVertexArrays(1, &m_VAO);
+    glGenBuffers(1, &m_VBO);
+    
+    // 绑定
+    glBindVertexArray(m_VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+    
+    //拷贝数据
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(LEARN_OPEN_GL::cubeVertices),
+                 LEARN_OPEN_GL::cubeVertices,
+                 GL_STATIC_DRAW);
+    
+    // 绑定数据
+    // 位置数据
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    
+    //坐标数据
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)(3*sizeof(float)));
+    glEnableVertexAttribArray(1);
+    
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    //设置变换矩阵
+    //观察矩阵
+    glm::mat4 view(1.0f);
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+    //投影矩阵
+    glm::mat4 projection(1.0f);
+    projection = glm::perspective(glm::radians(45.0f),
+                                  float(LEARN_OPEN_GL::SCR_WIDTH/LEARN_OPEN_GL::SCR_HEIGHT),
+                                  0.1f,
+                                  100.0f);
+
+    //传入顶点着色器
+    m_pShader->use();
+    GLuint locView = glGetUniformLocation(m_pShader->ID, "view");
+    glUniformMatrix4fv(locView, 1, GL_FALSE, glm::value_ptr(view));
+
+    GLuint locProjection = glGetUniformLocation(m_pShader->ID, "projection");
+    glUniformMatrix4fv(locProjection, 1, GL_FALSE, glm::value_ptr(projection));
+    
+}
+
+void draw3D_moreCube::draw()
+{
+    clearScreen();
+    
+    //清除深度缓冲
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, m_pTex1->textureId);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, m_pTex2->textureId);
+    
+    m_pShader->use();
+    
+    //不同的世界坐标
+    glm::vec3 cubePositions[] = {
+      glm::vec3( 0.0f,  0.0f,  0.0f),
+      glm::vec3( 2.0f,  5.0f, -15.0f),
+      glm::vec3(-1.5f, -2.2f, -2.5f),
+      glm::vec3(-3.8f, -2.0f, -12.3f),
+      glm::vec3( 2.4f, -0.4f, -3.5f),
+      glm::vec3(-1.7f,  3.0f, -7.5f),
+      glm::vec3( 1.3f, -2.0f, -2.5f),
+      glm::vec3( 1.5f,  2.0f, -2.5f),
+      glm::vec3( 1.5f,  0.2f, -1.5f),
+      glm::vec3(-1.3f,  1.0f, -1.5f)
+    };
+    
+    glBindVertexArray(m_VAO);
+    
+    // 模型矩阵
+    for(int i=0; i<10; i++) {
+        glm::mat4 model(1.0);
+        model = glm::translate(model, cubePositions[i]);
+        model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
+        GLuint locModel = glGetUniformLocation(m_pShader->ID, "model");
+        glUniformMatrix4fv(locModel, 1, GL_FALSE, glm::value_ptr(model));
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
+}
+
+void draw3D_moreCube::clear()
+{
+    glDeleteVertexArrays(1, &m_VAO);
+    glDeleteBuffers(1, &m_VBO);
+    
+    if (m_pTex1) {
+        delete m_pTex1;
+        m_pTex1 = NULL;
+    }
+    if (m_pTex2) {
+        delete m_pTex2;
+        m_pTex2 = NULL;
+    }
+}

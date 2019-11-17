@@ -171,6 +171,23 @@ private:
     renderTexture *m_pTex2;
 };
 
+//3D cube
+class draw3D_moreCube : public render{
+public:
+    void init() override;
+    void draw() override;
+    void clear() override;
+private:
+    void _bindData();
+private:
+    GLuint m_VAO;
+    GLuint m_VBO;
+    
+    renderTexture *m_pTex1;
+    renderTexture *m_pTex2;
+};
+
+
 //使用不同的VAO VBO绘制两个三角形
 class twoTriangleByDifferentAB : public render {
 public:

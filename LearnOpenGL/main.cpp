@@ -61,7 +61,8 @@ int main()
 //    drawRectanleWithTwoTex render; // 使用箱子和笑脸的纹理
 //    drawRectanleWithGLM render;  // 矩阵变幻
 //    draw3D_0 render; // 第一个3D图像
-    draw3D_cube render; // 立方体渲染器
+//    draw3D_cube render; // 立方体渲染器
+    draw3D_moreCube render; // 10个立方体
     render.init();
     
     while (!glfwWindowShouldClose(window)) {
