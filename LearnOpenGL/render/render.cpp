@@ -539,3 +539,116 @@ void drawRectanleWithGLM::clear()
         m_pTex2 = NULL;
     }
 }
+
+/*
+ ** 3D图形渲染
+ */
+void draw3D_0::init()
+{
+    _initShader("resources/shader/5_1_3D.vs", "resources/shader/5_1_3D.fs");
+    _bindData();
+    m_pTex1 = new renderTexture("resources/textures/container.jpg", GL_RGB);
+    m_pTex2 = new renderTexture("resources/textures/awesomeface.png", GL_RGBA);
+    
+    m_pShader->use();
+    m_pShader->setInt("texture1", 0);
+    m_pShader->setInt("texture2", 1);
+}
+
+void draw3D_0::_bindData()
+{
+    // 生成对象
+    glGenVertexArrays(1, &m_VAO);
+    glGenBuffers(1, &m_VBO);
+    glGenBuffers(1, &m_EBO);
+    
+    // 绑定
+    glBindVertexArray(m_VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+    
+    //拷贝数据
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(LEARN_OPEN_GL::verticesForRectWithTex),
+                 LEARN_OPEN_GL::verticesForRectWithTex,
+                 GL_STATIC_DRAW);
+    
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                 sizeof(LEARN_OPEN_GL::indices),
+                 LEARN_OPEN_GL::indices,
+                 GL_STATIC_DRAW);
+    
+    // 绑定数据
+    // 位置数据
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    
+    //颜色数据
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3*sizeof(float)));
+    glEnableVertexAttribArray(1);
+    
+    //坐标数据
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
+    glEnableVertexAttribArray(2);
+    
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    
+    //设置变换矩阵
+    // 模型矩阵
+    glm::mat4 model(1.0);
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+    //观察矩阵
+    glm::mat4 view(1.0f);
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+    //投影矩阵
+    glm::mat4 projection(1.0f);
+    projection = glm::perspective(glm::radians(45.0f),
+                                  float(LEARN_OPEN_GL::SCR_WIDTH/LEARN_OPEN_GL::SCR_HEIGHT),
+                                  0.1f,
+                                  100.0f);
+
+    //传入顶点着色器
+    m_pShader->use();
+    GLuint locModel = glGetUniformLocation(m_pShader->ID, "model");
+    glUniformMatrix4fv(locModel, 1, GL_FALSE, glm::value_ptr(model));
+
+    GLuint locView = glGetUniformLocation(m_pShader->ID, "view");
+    glUniformMatrix4fv(locView, 1, GL_FALSE, glm::value_ptr(view));
+
+    GLuint locProjection = glGetUniformLocation(m_pShader->ID, "projection");
+    glUniformMatrix4fv(locProjection, 1, GL_FALSE, glm::value_ptr(projection));
+
+}
+
+void draw3D_0::draw()
+{
+    clearScreen();
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, m_pTex1->textureId);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, m_pTex2->textureId);
+    
+    m_pShader->use();
+    glBindVertexArray(m_VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
+
+void draw3D_0::clear()
+{
+    glDeleteVertexArrays(1, &m_VAO);
+    glDeleteBuffers(1, &m_VBO);
+    glDeleteBuffers(1, &m_EBO);
+    if (m_pTex1) {
+        delete m_pTex1;
+        m_pTex1 = NULL;
+    }
+    if (m_pTex2) {
+        delete m_pTex2;
+        m_pTex2 = NULL;
+    }
+}

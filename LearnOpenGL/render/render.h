@@ -138,6 +138,22 @@ private:
     renderTexture *m_pTex2;
 };
 
+// 3d图形
+class draw3D_0 : public render{
+public:
+    void init() override;
+    void draw() override;
+    void clear() override;
+private:
+    void _bindData();
+private:
+    GLuint m_VAO;
+    GLuint m_VBO;
+    GLuint m_EBO;
+    
+    renderTexture *m_pTex1;
+    renderTexture *m_pTex2;
+};
 
 //使用不同的VAO VBO绘制两个三角形
 class twoTriangleByDifferentAB : public render {
