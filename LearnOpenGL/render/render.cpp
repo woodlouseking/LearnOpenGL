@@ -696,11 +696,23 @@ void draw3D_cube::_bindData()
     
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void draw3D_cube::draw()
+{
+    clearScreen();
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, m_pTex1->textureId);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, m_pTex2->textureId);
+    
+    m_pShader->use();
     
     //设置变换矩阵
     // 模型矩阵
     glm::mat4 model(1.0);
-    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 0.0f));
 
     //观察矩阵
     glm::mat4 view(1.0f);
@@ -714,7 +726,6 @@ void draw3D_cube::_bindData()
                                   100.0f);
 
     //传入顶点着色器
-    m_pShader->use();
     GLuint locModel = glGetUniformLocation(m_pShader->ID, "model");
     glUniformMatrix4fv(locModel, 1, GL_FALSE, glm::value_ptr(model));
 
@@ -723,18 +734,7 @@ void draw3D_cube::_bindData()
 
     GLuint locProjection = glGetUniformLocation(m_pShader->ID, "projection");
     glUniformMatrix4fv(locProjection, 1, GL_FALSE, glm::value_ptr(projection));
-}
-
-void draw3D_cube::draw()
-{
-    clearScreen();
     
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_pTex1->textureId);
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, m_pTex2->textureId);
-    
-    m_pShader->use();
     glBindVertexArray(m_VAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }
