@@ -5,14 +5,14 @@
 //  Created by www on 2019/11/20.
 //
 
-#ifndef keyBoard_hpp
-#define keyBoard_hpp
+#ifndef userInput_h
+#define userInput_h
 
 class GLFWwindow;
 
 #include "const.h"
 
-class keyBoard
+class userInput
 {
 public:
     // 处理按键信息
@@ -31,4 +31,4 @@ private:
     bool m_bPress[LEARN_OPEN_GL::KEY_STATS_LEN];
 };
 
-#endif /* keyBoard_h */
+#endif /* userInput_h */

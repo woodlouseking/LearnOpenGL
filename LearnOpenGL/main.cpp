@@ -16,7 +16,7 @@
 #include "matrix_transform.hpp"
 #include "type_ptr.hpp"
 #include "stb_image.h"
-#include "keyBoard.h"
+#include "userInput.h"
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -68,12 +68,12 @@ int main()
     manualCamera render; // 手动控制摄像机
     render.init();
     
-    //按键处理对象
-    keyBoard keyHandler;
+    //用户输入
+    userInput userInputHandler;
     
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
-        keyHandler.processInput(window);
+        userInputHandler.processInput(window);
         
         render.draw();
         

@@ -14,6 +14,7 @@
 #include "glm.hpp"
 
 class renderTexture;
+class userInput;
 
 class render{
 public:
@@ -25,8 +26,10 @@ public:
     virtual void draw() = 0;
     //清理
     virtual void clear() = 0;
-
-
+    
+    //设置处理用户输入的对象
+    virtual void setInputHandler(userInput *inputHandler){}
+    
     virtual ~render() {
         if (m_pShader) {
             delete m_pShader;
@@ -249,11 +252,17 @@ public:
     void draw() override;
     void clear() override;
     
+    //设置处理用户输入的对象
+    void setInputHandler(userInput *inputHandler){
+        m_pInputHandler = inputHandler;
+    }
+    
 private:
     void _bindData();
 private:
     GLuint m_VAO;
     GLuint m_VBO;
+    userInput *m_pInputHandler;
 };
 
 #endif /* my_render_h */

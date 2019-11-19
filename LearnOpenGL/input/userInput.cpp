@@ -6,9 +6,9 @@
 //
 
 #include <GLFW/glfw3.h>
-#include "keyBoard.h"
+#include "userInput.h"
 
-void keyBoard::processInput(GLFWwindow *window)
+void userInput::processInput(GLFWwindow *window)
 {
     //检测W S A D
     checkKey(window, GLFW_KEY_W);
@@ -17,7 +17,7 @@ void keyBoard::processInput(GLFWwindow *window)
     checkKey(window, GLFW_KEY_D);
 }
 
-void keyBoard::checkKey(GLFWwindow *window, int keyVal)
+void userInput::checkKey(GLFWwindow *window, int keyVal)
 {
     int status = glfwGetKey(window, keyVal);
     if (status == GLFW_PRESS) {
