@@ -11,6 +11,7 @@
 
 #include "const.h"
 #include "shader.h"
+#include "glm.hpp"
 
 class renderTexture;
 
@@ -24,6 +25,7 @@ public:
     virtual void draw() = 0;
     //清理
     virtual void clear() = 0;
+
 
     virtual ~render() {
         if (m_pShader) {
@@ -187,7 +189,7 @@ private:
     renderTexture *m_pTex2;
 };
 
-// 摄像机
+// 摄像机自旋转
 class draw3DCubeWithAutogyrationCamera : public render{
 public:
     void init() override;
@@ -203,6 +205,27 @@ private:
     renderTexture *m_pTex2;
 };
 
+// 手动控制摄像机
+class manualCamera : public render{
+public:
+    void init() override;
+    void draw() override;
+    void clear() override;
+private:
+    void _bindData();
+private:
+    GLuint m_VAO;
+    GLuint m_VBO;
+    
+    renderTexture *m_pTex1;
+    renderTexture *m_pTex2;
+    
+    //定义LookAt函数参数
+    glm::vec3 m_cameraPos; //摄像机位置
+    glm::vec3 m_cameraFront; // 摄像机前方
+    glm::vec3 m_cameraUp; // 摄像机上方
+    
+};
 
 //使用不同的VAO VBO绘制两个三角形
 class twoTriangleByDifferentAB : public render {

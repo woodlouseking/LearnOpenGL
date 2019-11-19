@@ -63,7 +63,8 @@ int main()
 //    draw3D_0 render; // 第一个3D图像
 //    draw3D_cube render; // 立方体渲染器
 //    draw3D_moreCube render; // 10个立方体
-    draw3DCubeWithAutogyrationCamera render;
+//    draw3DCubeWithAutogyrationCamera render; //自旋转摄像机
+    manualCamera render; // 手动控制摄像机
     render.init();
     
     while (!glfwWindowShouldClose(window)) {
