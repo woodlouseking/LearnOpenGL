@@ -62,7 +62,8 @@ int main()
 //    drawRectanleWithGLM render;  // 矩阵变幻
 //    draw3D_0 render; // 第一个3D图像
 //    draw3D_cube render; // 立方体渲染器
-    draw3D_moreCube render; // 10个立方体
+//    draw3D_moreCube render; // 10个立方体
+    draw3DCubeWithAutogyrationCamera render;
     render.init();
     
     while (!glfwWindowShouldClose(window)) {
