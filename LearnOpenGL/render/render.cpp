@@ -1112,7 +1112,7 @@ void manualCamera::draw()
     
     //观察矩阵/旋转矩阵转起来
 
-    view = glm::lookAt(m_cameraPos, m_cameraPos+m_cameraFront, m_cameraUp);
+    glm::mat4 view = glm::lookAt(m_cameraPos, m_cameraPos+m_cameraFront, m_cameraUp);
     
     GLuint locView = glGetUniformLocation(m_pShader->ID, "view");
     glUniformMatrix4fv(locView, 1, GL_FALSE, glm::value_ptr(view));

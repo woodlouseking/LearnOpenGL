@@ -10,6 +10,7 @@
 #define const_h
 
 namespace LEARN_OPEN_GL {
+    const int KEY_STATS_LEN = 1024; //按键状态
     const int LOG_INFO_LEN = 1024;
 
     const int SCR_WIDTH = 800;

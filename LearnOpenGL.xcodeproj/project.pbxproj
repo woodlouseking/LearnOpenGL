@@ -11,6 +11,7 @@
 		9A86AD402377BB5400159810 /* renderTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A86AD3E2377BB5400159810 /* renderTexture.cpp */; };
 		9AA5EFBF2371C4AA0020ECE8 /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5EFBD2371C4AA0020ECE8 /* render.cpp */; };
 		9AA5EFC7237315C20020ECE8 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5EFC6237315C20020ECE8 /* shader.cpp */; };
+		9AB4265623844D16003C9BC9 /* keyBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4265423844D16003C9BC9 /* keyBoard.cpp */; };
 		9ACE3195236D8A8300321C8C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE3194236D8A8300321C8C /* main.cpp */; };
 		9ACE3198236D8AB600321C8C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE3197236D8AB600321C8C /* OpenGL.framework */; };
 		9ACE319B236D8AC400321C8C /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ACE3199236D8AC400321C8C /* libGLEW.2.1.0.dylib */; };
@@ -414,6 +415,8 @@
 		9AA5EFBE2371C4AA0020ECE8 /* render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render.h; sourceTree = "<group>"; };
 		9AA5EFC5237315C20020ECE8 /* shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shader.h; sourceTree = "<group>"; };
 		9AA5EFC6237315C20020ECE8 /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
+		9AB4265423844D16003C9BC9 /* keyBoard.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = keyBoard.cpp; sourceTree = "<group>"; };
+		9AB4265723844D4A003C9BC9 /* keyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyBoard.h; sourceTree = "<group>"; };
 		9ACE318A236D8A6100321C8C /* LearnOpenGL */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LearnOpenGL; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ACE3194236D8A8300321C8C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9ACE3197236D8AB600321C8C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -878,6 +881,15 @@
 			path = shader;
 			sourceTree = "<group>";
 		};
+		9AB4265323844CF4003C9BC9 /* input */ = {
+			isa = PBXGroup;
+			children = (
+				9AB4265423844D16003C9BC9 /* keyBoard.cpp */,
+				9AB4265723844D4A003C9BC9 /* keyBoard.h */,
+			);
+			path = input;
+			sourceTree = "<group>";
+		};
 		9ACE3181236D8A6100321C8C = {
 			isa = PBXGroup;
 			children = (
@@ -899,6 +911,7 @@
 		9ACE318C236D8A6100321C8C /* LearnOpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				9AB4265323844CF4003C9BC9 /* input */,
 				9AA5EFC4237315C20020ECE8 /* shader */,
 				9ACE31A8236D8C9300321C8C /* const */,
 				9ACE31A2236D8B7100321C8C /* lib */,
@@ -998,6 +1011,7 @@
 				9ACE3195236D8A8300321C8C /* main.cpp in Sources */,
 				9A1228CD2376D726007C5230 /* stb_image.cpp in Sources */,
 				9AA5EFC7237315C20020ECE8 /* shader.cpp in Sources */,
+				9AB4265623844D16003C9BC9 /* keyBoard.cpp in Sources */,
 				9ACE31A4236D8B7100321C8C /* glad.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
