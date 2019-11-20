@@ -48,7 +48,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "460"
             endingLineNumber = "460"
-            landmarkName = "drawRectanleWithGLM::init()"
+            landmarkName = "drawTriangleWithColor::clear()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -64,7 +64,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "661"
             endingLineNumber = "661"
-            landmarkName = "draw3D_cube::init()"
+            landmarkName = "draw3D_0::clear()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -80,134 +80,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "952"
             endingLineNumber = "952"
-            landmarkName = "draw3DCubeWithAutogyrationCamera::draw()"
+            landmarkName = "draw3DCubeWithAutogyrationCamera::_bindData()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B788F570-FC64-469C-B7B9-4D658AAB6DE9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LearnOpenGL/render/render.h"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "render"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "B788F570-FC64-469C-B7B9-4D658AAB6DE9 - f52952bfe12edd6f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "render::~render()"
-                  moduleName = "LearnOpenGL"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wanghaiping/Desktop/git/openGl/LearnOpenGL/LearnOpenGL/render/render.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "8">
-               </Location>
-               <Location
-                  uuid = "B788F570-FC64-469C-B7B9-4D658AAB6DE9 - f52952bfe12edd6f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "render::~render()"
-                  moduleName = "LearnOpenGL"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wanghaiping/Desktop/git/openGl/LearnOpenGL/LearnOpenGL/render/render.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "8">
-               </Location>
-               <Location
-                  uuid = "B788F570-FC64-469C-B7B9-4D658AAB6DE9 - f52952bfe12edd6f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "render::~render()"
-                  moduleName = "LearnOpenGL"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wanghaiping/Desktop/git/openGl/LearnOpenGL/LearnOpenGL/render/render.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "27">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7EC80D79-1999-4A62-AA1B-C4902ED62D8A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LearnOpenGL/render/render.h"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "render"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "7EC80D79-1999-4A62-AA1B-C4902ED62D8A - f52952bfe12edd6f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "render::~render()"
-                  moduleName = "LearnOpenGL"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wanghaiping/Desktop/git/openGl/LearnOpenGL/LearnOpenGL/render/render.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "8">
-               </Location>
-               <Location
-                  uuid = "7EC80D79-1999-4A62-AA1B-C4902ED62D8A - f52952bfe12edd6f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "render::~render()"
-                  moduleName = "LearnOpenGL"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wanghaiping/Desktop/git/openGl/LearnOpenGL/LearnOpenGL/render/render.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "8">
-               </Location>
-               <Location
-                  uuid = "7EC80D79-1999-4A62-AA1B-C4902ED62D8A - f52952bfe12edd6f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "render::~render()"
-                  moduleName = "LearnOpenGL"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/wanghaiping/Desktop/git/openGl/LearnOpenGL/LearnOpenGL/render/render.h"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "27">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -230,7 +104,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "61CBB82F-0BA2-4C0D-B931-E29B42906347"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LearnOpenGL/main.cpp"

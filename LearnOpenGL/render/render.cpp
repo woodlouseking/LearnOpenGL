@@ -13,6 +13,28 @@
 #include "renderTexture.h"
 #include "matrix_transform.hpp"
 #include "type_ptr.hpp"
+#include "userInput.h"
+
+render::render():
+m_pShader(NULL),
+m_deltaTime(0.0),
+m_lastFrameTime(0.0) {
+    
+}
+
+//渲染入口
+void render::Rendering()
+{
+    //一些公共处理：计算帧间隔
+    GLfloat currentTime = glfwGetTime();
+    m_deltaTime = currentTime - m_lastFrameTime;
+    m_lastFrameTime = currentTime;
+    
+    clearScreen();
+    
+    //子类实现
+    draw();
+}
 
 // 编译着色器
 void render::_initShader(const char *vertexShaderSource, const char *fragmentShaderSource)
@@ -28,8 +50,8 @@ void render::clearScreen()
 
 
 /*
-    ** 绘制三角形
-*/
+ ** 绘制三角形
+ */
 void drawTriangle::init()
 {
     // 着色器
@@ -60,9 +82,7 @@ void drawTriangle::_bindData()
 
 void drawTriangle::draw()
 {
-    clearScreen();
-    
-//    glUseProgram(m_shaderProgram);
+    //    glUseProgram(m_shaderProgram);
     m_pShader->use();
     
     glBindVertexArray(m_VAO);
@@ -79,7 +99,7 @@ void drawTriangle::clear()
 
 /*
  **绘制两个相邻三角形
-*/
+ */
 void neighborTriangle::init()
 {
     _initShader();
@@ -109,7 +129,6 @@ void neighborTriangle::_bindData()
 
 void neighborTriangle::draw()
 {
-    clearScreen();
     
     m_pShader->use();
     
@@ -125,7 +144,7 @@ void neighborTriangle::clear()
 
 /*
  ** 使用索引绘制矩形
-*/
+ */
 void drawRectangleByIndex::init()
 {
     // 编译着色器
@@ -138,8 +157,6 @@ void drawRectangleByIndex::draw()
 {
     // 设置绘制模式
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // 开启线框模式
-    
-    clearScreen();
     
     m_pShader->use();
     glBindVertexArray(m_VAO);
@@ -235,7 +252,6 @@ void drawRectanleWithTex::_bindData()
 
 void drawRectanleWithTex::draw()
 {
-    clearScreen();
     
     m_pShader->use();
     
@@ -312,7 +328,6 @@ void drawRectanleWithTwoTex::_bindData()
 
 void drawRectanleWithTwoTex::draw()
 {
-    clearScreen();
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_pTex1->textureId);
@@ -341,7 +356,7 @@ void drawRectanleWithTwoTex::clear()
 
 /*
  ** 使用不同的VAO/VBO绘制两个三角形
-*/
+ */
 void twoTriangleByDifferentAB::init()
 {
     _initShader();
@@ -352,7 +367,6 @@ void twoTriangleByDifferentAB::draw()
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // 开启线框模式
     
-    clearScreen();
     
     m_pShader->use();
     glBindVertexArray(m_VAOs[0]);
@@ -399,7 +413,7 @@ void twoTriangleByDifferentAB::_bindData()
 //with color
 void drawTriangleWithColor::init()
 {
-//    _initShader(LEARN_OPEN_GL::vertexWithColorShaderSource, LEARN_OPEN_GL::framentWithColorShaderSource);
+    //    _initShader(LEARN_OPEN_GL::vertexWithColorShaderSource, LEARN_OPEN_GL::framentWithColorShaderSource);
     _initShader("resources/shader/1_withColor.vs", "resources/shader/1_withColor.fs");
     _bindData();
 }
@@ -431,9 +445,8 @@ void drawTriangleWithColor::_bindData()
 
 void drawTriangleWithColor::draw()
 {
-    clearScreen();
     
-//    glUseProgram(m_shaderProgram);
+    //    glUseProgram(m_shaderProgram);
     m_pShader->use();
     
     glBindVertexArray(m_VAO);
@@ -511,7 +524,6 @@ void drawRectanleWithGLM::_bindData()
 
 void drawRectanleWithGLM::draw()
 {
-    clearScreen();
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_pTex1->textureId);
@@ -598,34 +610,33 @@ void draw3D_0::_bindData()
     // 模型矩阵
     glm::mat4 model(1.0);
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
+    
     //观察矩阵
     glm::mat4 view(1.0f);
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-
+    
     //投影矩阵
     glm::mat4 projection(1.0f);
     projection = glm::perspective(glm::radians(45.0f),
                                   float(LEARN_OPEN_GL::SCR_WIDTH/LEARN_OPEN_GL::SCR_HEIGHT),
                                   0.1f,
                                   100.0f);
-
+    
     //传入顶点着色器
     m_pShader->use();
     GLuint locModel = glGetUniformLocation(m_pShader->ID, "model");
     glUniformMatrix4fv(locModel, 1, GL_FALSE, glm::value_ptr(model));
-
+    
     GLuint locView = glGetUniformLocation(m_pShader->ID, "view");
     glUniformMatrix4fv(locView, 1, GL_FALSE, glm::value_ptr(view));
-
+    
     GLuint locProjection = glGetUniformLocation(m_pShader->ID, "projection");
     glUniformMatrix4fv(locProjection, 1, GL_FALSE, glm::value_ptr(projection));
-
+    
 }
 
 void draw3D_0::draw()
 {
-    clearScreen();
     
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_pTex1->textureId);
@@ -702,7 +713,6 @@ void draw3D_cube::_bindData()
 
 void draw3D_cube::draw()
 {
-    clearScreen();
     
     //清除深度缓冲
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -718,25 +728,25 @@ void draw3D_cube::draw()
     // 模型矩阵
     glm::mat4 model(1.0);
     model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 0.0f));
-
+    
     //观察矩阵
     glm::mat4 view(1.0f);
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-
+    
     //投影矩阵
     glm::mat4 projection(1.0f);
     projection = glm::perspective(glm::radians(45.0f),
                                   float(LEARN_OPEN_GL::SCR_WIDTH/LEARN_OPEN_GL::SCR_HEIGHT),
                                   0.1f,
                                   100.0f);
-
+    
     //传入顶点着色器
     GLuint locModel = glGetUniformLocation(m_pShader->ID, "model");
     glUniformMatrix4fv(locModel, 1, GL_FALSE, glm::value_ptr(model));
-
+    
     GLuint locView = glGetUniformLocation(m_pShader->ID, "view");
     glUniformMatrix4fv(locView, 1, GL_FALSE, glm::value_ptr(view));
-
+    
     GLuint locProjection = glGetUniformLocation(m_pShader->ID, "projection");
     glUniformMatrix4fv(locProjection, 1, GL_FALSE, glm::value_ptr(projection));
     
@@ -810,19 +820,19 @@ void draw3D_moreCube::_bindData()
     //观察矩阵
     glm::mat4 view(1.0f);
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-
+    
     //投影矩阵
     glm::mat4 projection(1.0f);
     projection = glm::perspective(glm::radians(45.0f),
                                   float(LEARN_OPEN_GL::SCR_WIDTH/LEARN_OPEN_GL::SCR_HEIGHT),
                                   0.1f,
                                   100.0f);
-
+    
     //传入顶点着色器
     m_pShader->use();
     GLuint locView = glGetUniformLocation(m_pShader->ID, "view");
     glUniformMatrix4fv(locView, 1, GL_FALSE, glm::value_ptr(view));
-
+    
     GLuint locProjection = glGetUniformLocation(m_pShader->ID, "projection");
     glUniformMatrix4fv(locProjection, 1, GL_FALSE, glm::value_ptr(projection));
     
@@ -830,7 +840,6 @@ void draw3D_moreCube::_bindData()
 
 void draw3D_moreCube::draw()
 {
-    clearScreen();
     
     //清除深度缓冲
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -844,16 +853,16 @@ void draw3D_moreCube::draw()
     
     //不同的世界坐标
     glm::vec3 cubePositions[] = {
-      glm::vec3( 0.0f,  0.0f,  0.0f),
-      glm::vec3( 2.0f,  5.0f, -15.0f),
-      glm::vec3(-1.5f, -2.2f, -2.5f),
-      glm::vec3(-3.8f, -2.0f, -12.3f),
-      glm::vec3( 2.4f, -0.4f, -3.5f),
-      glm::vec3(-1.7f,  3.0f, -7.5f),
-      glm::vec3( 1.3f, -2.0f, -2.5f),
-      glm::vec3( 1.5f,  2.0f, -2.5f),
-      glm::vec3( 1.5f,  0.2f, -1.5f),
-      glm::vec3(-1.3f,  1.0f, -1.5f)
+        glm::vec3( 0.0f,  0.0f,  0.0f),
+        glm::vec3( 2.0f,  5.0f, -15.0f),
+        glm::vec3(-1.5f, -2.2f, -2.5f),
+        glm::vec3(-3.8f, -2.0f, -12.3f),
+        glm::vec3( 2.4f, -0.4f, -3.5f),
+        glm::vec3(-1.7f,  3.0f, -7.5f),
+        glm::vec3( 1.3f, -2.0f, -2.5f),
+        glm::vec3( 1.5f,  2.0f, -2.5f),
+        glm::vec3( 1.5f,  0.2f, -1.5f),
+        glm::vec3(-1.3f,  1.0f, -1.5f)
     };
     
     glBindVertexArray(m_VAO);
@@ -948,8 +957,7 @@ void draw3DCubeWithAutogyrationCamera::_bindData()
 void draw3DCubeWithAutogyrationCamera::draw()
 {
     float currentFrame = glfwGetTime();
-
-    clearScreen();
+    
     
     //清除深度缓冲
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -981,7 +989,7 @@ void draw3DCubeWithAutogyrationCamera::draw()
     GLfloat radius = 10.0f;
     GLfloat camX = sin(glfwGetTime()) * radius;
     GLfloat camZ = cos(glfwGetTime()) * radius;
-
+    
     glm::mat4 view(1.0f);
     view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0, 1.0, 0.0));
     
@@ -1082,7 +1090,6 @@ void manualCamera::_bindData()
 
 void manualCamera::draw()
 {
-    clearScreen();
     
     //清除深度缓冲
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -1110,8 +1117,9 @@ void manualCamera::draw()
     
     glBindVertexArray(m_VAO);
     
+    checkInput();
+    
     //观察矩阵/旋转矩阵转起来
-
     glm::mat4 view = glm::lookAt(m_cameraPos, m_cameraPos+m_cameraFront, m_cameraUp);
     
     GLuint locView = glGetUniformLocation(m_pShader->ID, "view");
@@ -1125,6 +1133,23 @@ void manualCamera::draw()
         GLuint locModel = glGetUniformLocation(m_pShader->ID, "model");
         glUniformMatrix4fv(locModel, 1, GL_FALSE, glm::value_ptr(model));
         glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
+}
+
+void manualCamera::checkInput()
+{
+    if(!m_pInputHandler) {
+        return;
+    }
+    float speed = 5.0f * m_deltaTime;
+    if (m_pInputHandler->isPress(GLFW_KEY_W)) {
+        m_cameraPos += speed * m_cameraFront;
+    } else if(m_pInputHandler->isPress(GLFW_KEY_S)) {
+        m_cameraPos -= speed * m_cameraFront;
+    } else if(m_pInputHandler->isPress(GLFW_KEY_A)) {
+        m_cameraPos -= glm::normalize(glm::cross(m_cameraFront, m_cameraUp)) * speed;
+    } else if(m_pInputHandler->isPress(GLFW_KEY_D)) {
+        m_cameraPos += glm::normalize(glm::cross(m_cameraFront, m_cameraUp)) * speed;
     }
 }
 

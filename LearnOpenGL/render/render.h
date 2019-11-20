@@ -18,12 +18,13 @@ class userInput;
 
 class render{
 public:
-    render():m_pShader(NULL){};
+    render();
     
     //初始化
     virtual void init() = 0;
-    // 渲染
-    virtual void draw() = 0;
+    //渲染入口
+    void Rendering();
+    
     //清理
     virtual void clear() = 0;
     
@@ -38,12 +39,19 @@ public:
     };
 
 protected:
+    // 渲染
+    virtual void draw() = 0;
+    
     virtual void _initShader(const char *vertexShaderSource = "resources/shader/0_common.vs", const char *fragmentShaderSource="resources/shader/0_common.fs");
     virtual void clearScreen();
 
 protected:
     //封装后的的shader
     LEARN_OPEN_GL::Shader *m_pShader;
+    
+    //渲染时间的计算
+    float m_deltaTime;
+    float m_lastFrameTime; //上一帧时间
 };
 
 //绘制三角形
@@ -214,14 +222,26 @@ public:
     void init() override;
     void draw() override;
     void clear() override;
+    //设置处理用户输入的对象
+    void setInputHandler(userInput *inputHandler) override {
+        m_pInputHandler = inputHandler;
+    }
+    
+    
 private:
     void _bindData();
+    //检测按键处理
+    void checkInput();
+    
 private:
     GLuint m_VAO;
     GLuint m_VBO;
     
     renderTexture *m_pTex1;
     renderTexture *m_pTex2;
+    
+    // input handler
+    userInput *m_pInputHandler;
     
     //定义LookAt函数参数
     glm::vec3 m_cameraPos; //摄像机位置
@@ -252,17 +272,12 @@ public:
     void draw() override;
     void clear() override;
     
-    //设置处理用户输入的对象
-    void setInputHandler(userInput *inputHandler){
-        m_pInputHandler = inputHandler;
-    }
-    
 private:
     void _bindData();
+    
 private:
     GLuint m_VAO;
     GLuint m_VBO;
-    userInput *m_pInputHandler;
 };
 
 #endif /* my_render_h */

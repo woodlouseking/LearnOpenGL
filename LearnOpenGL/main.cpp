@@ -71,11 +71,14 @@ int main()
     //用户输入
     userInput userInputHandler;
     
+    //设置渲染器的用户输入器
+    render.setInputHandler(&userInputHandler);
+    
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
         userInputHandler.processInput(window);
         
-        render.draw();
+        render.Rendering();
         
         glfwSwapBuffers(window);
         glfwPollEvents();
