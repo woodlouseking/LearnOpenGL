@@ -247,6 +247,7 @@ private:
     glm::vec3 m_cameraPos; //摄像机位置
     glm::vec3 m_cameraFront; // 摄像机前方
     glm::vec3 m_cameraUp; // 摄像机上方
+    float m_fov; // 摄像机视野
     
     float m_pitch; //俯仰角
     float m_yaw; //滚转角

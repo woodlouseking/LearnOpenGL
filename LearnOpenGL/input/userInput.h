@@ -27,6 +27,19 @@ public:
         m_xOffset = 0;
         m_yOffset = 0;
     }
+    
+    void mouseScroll(GLFWwindow *window, double xoff, double yoff) {
+        m_scrollYoffset = yoff;
+        m_scrollXoffset = xoff;
+    };
+    
+    //获取鼠标滚轮缩放
+    void getMouseScroll(float &xoff, float &yoff) {
+        xoff = m_scrollXoffset;
+        yoff = m_scrollYoffset;
+        m_scrollYoffset = 0;
+        m_scrollXoffset = 0;
+    }
 
     // 处理按键信息
     void processInput(GLFWwindow *window);
@@ -50,6 +63,10 @@ private:
     //计算出的偏移量
     float m_xOffset;
     float m_yOffset;
+    
+    //鼠标缩放的变量
+    float m_scrollXoffset;
+    float m_scrollYoffset;
 };
 
 #endif /* userInput_h */

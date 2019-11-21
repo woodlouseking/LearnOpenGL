@@ -1035,6 +1035,7 @@ void manualCamera::init()
     m_cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
     m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
     m_cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    m_fov = 45.0f;
     
     _initShader("resources/shader/5_2_cube.vs", "resources/shader/5_2_cube.fs");
     _bindData();
@@ -1077,19 +1078,6 @@ void manualCamera::_bindData()
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    //设置变换矩阵
-    //投影矩阵
-    glm::mat4 projection(1.0f);
-    projection = glm::perspective(glm::radians(45.0f),
-                                  float(LEARN_OPEN_GL::SCR_WIDTH/LEARN_OPEN_GL::SCR_HEIGHT),
-                                  0.1f,
-                                  100.0f);
-    
-    //传入顶点着色器
-    m_pShader->use();
-    GLuint locProjection = glGetUniformLocation(m_pShader->ID, "projection");
-    glUniformMatrix4fv(locProjection, 1, GL_FALSE, glm::value_ptr(projection));
-    
 }
 
 void manualCamera::draw()
@@ -1129,6 +1117,17 @@ void manualCamera::draw()
     
     GLuint locView = glGetUniformLocation(m_pShader->ID, "view");
     glUniformMatrix4fv(locView, 1, GL_FALSE, glm::value_ptr(view));
+    
+    //投影矩阵
+    glm::mat4 projection(1.0f);
+    projection = glm::perspective(glm::radians(m_fov),
+                                  float(LEARN_OPEN_GL::SCR_WIDTH/LEARN_OPEN_GL::SCR_HEIGHT),
+                                  0.1f,
+                                  100.0f);
+    
+    //传入顶点着色器
+    GLuint locProjection = glGetUniformLocation(m_pShader->ID, "projection");
+    glUniformMatrix4fv(locProjection, 1, GL_FALSE, glm::value_ptr(projection));
     
     // 模型矩阵
     for(int i=0; i<10; i++) {
@@ -1185,6 +1184,20 @@ void manualCamera::checkInput()
     front.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
     m_cameraFront = glm::normalize(front);
 //    std::cout<<" front = "<<front.x<<" y = "<<front.y<<" z = "<<front.z<<std::endl;
+    
+    //滚轮处理
+    float scrollXoff = 0;
+    float scrollYoff = 0;
+    m_pInputHandler->getMouseScroll(scrollXoff, scrollYoff);
+    if (m_fov>=1.0f && m_fov<=45.0f) {
+        m_fov -= scrollYoff;
+    }
+    if (m_fov <= 1.0f) {
+        m_fov = 1.0f;
+    }
+    if (m_fov >= 45.0f) {
+        m_fov = 45.0f;
+    }
 }
 
 void manualCamera::clear()

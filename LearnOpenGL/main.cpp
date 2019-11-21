@@ -28,6 +28,11 @@ void mouseCallBack(GLFWwindow *window, double xPos, double yPos)
 {
     userInputHandler.mouseCallBack(window, xPos, yPos);
 }
+//梳理鼠标滚动
+void scrollCallBack(GLFWwindow *window, double xoff, double yoff)
+{
+    userInputHandler.mouseScroll(window, xoff, yoff);
+}
 
 
 int main()
@@ -61,6 +66,7 @@ int main()
         return -1;
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetScrollCallback(window, scrollCallBack);
     
 //    twoTriangleByDifferentAB render; // 使用不同的VAO VBO绘制两个三角行
 //    drawRectangleByIndex render; // 使用索引绘制一个矩形
