@@ -6,7 +6,35 @@
 //
 
 #include <GLFW/glfw3.h>
+#include <iostream>
 #include "userInput.h"
+
+userInput::userInput():
+m_bFirstMouse(true),
+m_lastYpos(LEARN_OPEN_GL::SCR_HEIGHT/2),
+m_lastXPos(LEARN_OPEN_GL::SCR_WIDTH/2),
+m_xOffset(0),
+m_yOffset(0)
+{
+    
+}
+
+//鼠标的处理
+void userInput::mouseCallBack(GLFWwindow *window, double xPos, double yPos)
+{
+    if(m_bFirstMouse) {
+        m_bFirstMouse = false;
+        m_lastYpos = yPos;
+        m_lastXPos = xPos;
+    }
+    
+    // 计算鼠标偏移
+    m_xOffset = xPos - m_lastXPos;
+    m_yOffset = m_lastYpos - yPos;
+    
+    m_lastXPos = xPos;
+    m_lastYpos = yPos;
+}
 
 void userInput::processInput(GLFWwindow *window)
 {

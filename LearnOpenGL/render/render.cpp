@@ -1027,6 +1027,10 @@ void draw3DCubeWithAutogyrationCamera::clear()
  */
 void manualCamera::init()
 {
+    //初始化俯仰角、滚转角
+    m_pitch = 0;
+    m_yaw = -90.0f;
+    
     //初始化摄像机位置
     m_cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
     m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -1117,6 +1121,7 @@ void manualCamera::draw()
     
     glBindVertexArray(m_VAO);
     
+    //处理输入
     checkInput();
     
     //观察矩阵/旋转矩阵转起来
@@ -1141,6 +1146,8 @@ void manualCamera::checkInput()
     if(!m_pInputHandler) {
         return;
     }
+    
+    //按键的处理
     float speed = 5.0f * m_deltaTime;
     if (m_pInputHandler->isPress(GLFW_KEY_W)) {
         m_cameraPos += speed * m_cameraFront;
@@ -1151,6 +1158,33 @@ void manualCamera::checkInput()
     } else if(m_pInputHandler->isPress(GLFW_KEY_D)) {
         m_cameraPos += glm::normalize(glm::cross(m_cameraFront, m_cameraUp)) * speed;
     }
+    
+    //鼠标的处理
+    float xOffset = 0;
+    float yOffset = 0;
+    m_pInputHandler->getMouseOffset(xOffset, yOffset);
+//    std::cout<<"get xoffset = "<<xOffset<<" yoffset = "<<yOffset<<std::endl;
+    
+    float sensitivity = 0.05;
+    xOffset *= sensitivity;
+    yOffset *= sensitivity;
+    
+    m_yaw += xOffset;
+    m_pitch += yOffset;
+    
+    if (m_pitch > 89.0f) {
+        m_pitch = 89.0f;
+    }
+    if (m_pitch < -89.0f) {
+        m_pitch = -89;
+    }
+    
+    glm::vec3 front;
+    front.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+    front.y = sin(glm::radians(m_pitch));
+    front.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+    m_cameraFront = glm::normalize(front);
+//    std::cout<<" front = "<<front.x<<" y = "<<front.y<<" z = "<<front.z<<std::endl;
 }
 
 void manualCamera::clear()

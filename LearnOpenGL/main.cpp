@@ -21,6 +21,15 @@
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 
+//用户输入
+userInput userInputHandler;
+//处理鼠标的输入
+void mouseCallBack(GLFWwindow *window, double xPos, double yPos)
+{
+    userInputHandler.mouseCallBack(window, xPos, yPos);
+}
+
+
 int main()
 {
     glfwInit();
@@ -68,12 +77,12 @@ int main()
     manualCamera render; // 手动控制摄像机
     render.init();
     
-    //用户输入
-    userInput userInputHandler;
-    
     //设置渲染器的用户输入器
     render.setInputHandler(&userInputHandler);
     
+    // 捕捉鼠标
+//    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPosCallback(window, mouseCallBack);
     while (!glfwWindowShouldClose(window)) {
         processInput(window);
         userInputHandler.processInput(window);
