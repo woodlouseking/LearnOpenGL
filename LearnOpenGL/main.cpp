@@ -28,7 +28,7 @@ void mouseCallBack(GLFWwindow *window, double xPos, double yPos)
 {
     userInputHandler.mouseCallBack(window, xPos, yPos);
 }
-//梳理鼠标滚动
+//处理鼠标滚动
 void scrollCallBack(GLFWwindow *window, double xoff, double yoff)
 {
     userInputHandler.mouseScroll(window, xoff, yoff);
@@ -83,8 +83,9 @@ int main()
     manualCamera render; // 手动控制摄像机
     render.init();
     
-    //设置渲染器的用户输入器
-    render.setInputHandler(&userInputHandler);
+    if (render.getCamera()) {
+        userInputHandler.addHandler(render.getCamera());
+    }
     
     // 捕捉鼠标
 //    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);

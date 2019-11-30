@@ -1026,16 +1026,10 @@ void draw3DCubeWithAutogyrationCamera::clear()
  ** 3D 手动控制Camera
  */
 void manualCamera::init()
-{
-    //初始化俯仰角、滚转角
-    m_pitch = 0;
-    m_yaw = -90.0f;
-    
-    //初始化摄像机位置
-    m_cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-    m_cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-    m_cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-    m_fov = 45.0f;
+{   
+    // 初始化摄像机
+    m_pCamera = new Camera();
+    m_pCamera->setDelta(&m_deltaTime);
     
     _initShader("resources/shader/5_2_cube.vs", "resources/shader/5_2_cube.fs");
     _bindData();
@@ -1109,18 +1103,16 @@ void manualCamera::draw()
     
     glBindVertexArray(m_VAO);
     
-    //处理输入
-    checkInput();
-    
     //观察矩阵/旋转矩阵转起来
-    glm::mat4 view = glm::lookAt(m_cameraPos, m_cameraPos+m_cameraFront, m_cameraUp);
+//    glm::mat4 view = glm::lookAt(m_cameraPos, m_cameraPos+m_cameraFront, m_cameraUp);
+    glm::mat4 view = m_pCamera->GetViewMatrix();
     
     GLuint locView = glGetUniformLocation(m_pShader->ID, "view");
     glUniformMatrix4fv(locView, 1, GL_FALSE, glm::value_ptr(view));
     
     //投影矩阵
     glm::mat4 projection(1.0f);
-    projection = glm::perspective(glm::radians(m_fov),
+    projection = glm::perspective(glm::radians(m_pCamera->zoom()),
                                   float(LEARN_OPEN_GL::SCR_WIDTH/LEARN_OPEN_GL::SCR_HEIGHT),
                                   0.1f,
                                   100.0f);
@@ -1140,66 +1132,6 @@ void manualCamera::draw()
     }
 }
 
-void manualCamera::checkInput()
-{
-    if(!m_pInputHandler) {
-        return;
-    }
-    
-    //按键的处理
-    float speed = 5.0f * m_deltaTime;
-    if (m_pInputHandler->isPress(GLFW_KEY_W)) {
-        m_cameraPos += speed * m_cameraFront;
-    } else if(m_pInputHandler->isPress(GLFW_KEY_S)) {
-        m_cameraPos -= speed * m_cameraFront;
-    } else if(m_pInputHandler->isPress(GLFW_KEY_A)) {
-        m_cameraPos -= glm::normalize(glm::cross(m_cameraFront, m_cameraUp)) * speed;
-    } else if(m_pInputHandler->isPress(GLFW_KEY_D)) {
-        m_cameraPos += glm::normalize(glm::cross(m_cameraFront, m_cameraUp)) * speed;
-    }
-    
-    //鼠标的处理
-    float xOffset = 0;
-    float yOffset = 0;
-    m_pInputHandler->getMouseOffset(xOffset, yOffset);
-//    std::cout<<"get xoffset = "<<xOffset<<" yoffset = "<<yOffset<<std::endl;
-    
-    float sensitivity = 0.05;
-    xOffset *= sensitivity;
-    yOffset *= sensitivity;
-    
-    m_yaw += xOffset;
-    m_pitch += yOffset;
-    
-    if (m_pitch > 89.0f) {
-        m_pitch = 89.0f;
-    }
-    if (m_pitch < -89.0f) {
-        m_pitch = -89;
-    }
-    
-    glm::vec3 front;
-    front.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-    front.y = sin(glm::radians(m_pitch));
-    front.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-    m_cameraFront = glm::normalize(front);
-//    std::cout<<" front = "<<front.x<<" y = "<<front.y<<" z = "<<front.z<<std::endl;
-    
-    //滚轮处理
-    float scrollXoff = 0;
-    float scrollYoff = 0;
-    m_pInputHandler->getMouseScroll(scrollXoff, scrollYoff);
-    if (m_fov>=1.0f && m_fov<=45.0f) {
-        m_fov -= scrollYoff;
-    }
-    if (m_fov <= 1.0f) {
-        m_fov = 1.0f;
-    }
-    if (m_fov >= 45.0f) {
-        m_fov = 45.0f;
-    }
-}
-
 void manualCamera::clear()
 {
     glDeleteVertexArrays(1, &m_VAO);
@@ -1214,3 +1146,4 @@ void manualCamera::clear()
         m_pTex2 = NULL;
     }
 }
+

@@ -12,9 +12,10 @@
 #include "const.h"
 #include "shader.h"
 #include "glm.hpp"
+#include "userInput.h"
+#include "Camera.h"
 
 class renderTexture;
-class userInput;
 
 class render{
 public:
@@ -28,15 +29,16 @@ public:
     //清理
     virtual void clear() = 0;
     
-    //设置处理用户输入的对象
-    virtual void setInputHandler(userInput *inputHandler){}
-    
     virtual ~render() {
         if (m_pShader) {
             delete m_pShader;
             m_pShader = NULL;
         }
     };
+    
+    Camera* getCamera() {
+        return m_pCamera;
+    }
 
 protected:
     // 渲染
@@ -52,6 +54,9 @@ protected:
     //渲染时间的计算
     float m_deltaTime;
     float m_lastFrameTime; //上一帧时间
+    
+    //摄像机
+    Camera *m_pCamera;
 };
 
 //绘制三角形
@@ -222,36 +227,16 @@ public:
     void init() override;
     void draw() override;
     void clear() override;
-    //设置处理用户输入的对象
-    void setInputHandler(userInput *inputHandler) override {
-        m_pInputHandler = inputHandler;
-    }
-    
     
 private:
     void _bindData();
-    //检测按键处理
-    void checkInput();
-    
+
 private:
     GLuint m_VAO;
     GLuint m_VBO;
     
     renderTexture *m_pTex1;
     renderTexture *m_pTex2;
-    
-    // input handler
-    userInput *m_pInputHandler;
-    
-    //定义LookAt函数参数
-    glm::vec3 m_cameraPos; //摄像机位置
-    glm::vec3 m_cameraFront; // 摄像机前方
-    glm::vec3 m_cameraUp; // 摄像机上方
-    float m_fov; // 摄像机视野
-    
-    float m_pitch; //俯仰角
-    float m_yaw; //滚转角
-    
 };
 
 //使用不同的VAO VBO绘制两个三角形

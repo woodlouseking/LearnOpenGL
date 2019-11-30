@@ -11,11 +11,31 @@
 class GLFWwindow;
 
 #include "const.h"
+#include <vector>
+
+class userInput;
+
+class inputHandler
+{
+public:
+    // 鼠标移动的监听
+    void virtual onMouseMoving(float xOffset, float yOffset) = 0;
+    
+    //鼠标轮滚动的监听处理
+    void virtual onMouseScroll(float xOffset, float yOffset) = 0;
+    
+    //键盘的监听
+    void virtual onKeyBoard(userInput *obj) = 0;
+};
 
 class userInput
 {
 public:
     userInput();
+    
+    ~userInput(){
+        m_inputHandler.clear();
+    }
     
     // 监听鼠标移动的函数
     void mouseCallBack(GLFWwindow *window, double xPos, double yPos);
@@ -28,10 +48,7 @@ public:
         m_yOffset = 0;
     }
     
-    void mouseScroll(GLFWwindow *window, double xoff, double yoff) {
-        m_scrollYoffset = yoff;
-        m_scrollXoffset = xoff;
-    };
+    void mouseScroll(GLFWwindow *window, double xoff, double yoff);
     
     //获取鼠标滚轮缩放
     void getMouseScroll(float &xoff, float &yoff) {
@@ -48,7 +65,10 @@ public:
     bool isPress(int keyVal) {
         return m_bPress[keyVal];
     }
-
+    
+    //添加、移除处理者
+    void addHandler(inputHandler *handler);
+    void removeHandler(inputHandler *handler);
 private:
     //检测一个键的状态
     void checkKey(GLFWwindow *window, int keyVal);
@@ -67,6 +87,9 @@ private:
     //鼠标缩放的变量
     float m_scrollXoffset;
     float m_scrollYoffset;
+    
+    // 监听者
+    std::vector<inputHandler*> m_inputHandler;
 };
 
 #endif /* userInput_h */
