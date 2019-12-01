@@ -126,8 +126,8 @@
             filePath = "LearnOpenGL/render/render.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1191"
-            endingLineNumber = "1191">
+            startingLineNumber = "1242"
+            endingLineNumber = "1242">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -159,6 +159,22 @@
             startingLineNumber = "38"
             endingLineNumber = "38"
             landmarkName = "~userInput()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "56E2B106-181F-4BA1-9C0B-BE4775C87A46"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LearnOpenGL/render/render.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1204"
+            endingLineNumber = "1204"
+            landmarkName = "lightColor::draw()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

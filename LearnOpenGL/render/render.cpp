@@ -1147,3 +1147,95 @@ void manualCamera::clear()
     }
 }
 
+/*
+ **光照渲染
+*/
+void lightColor::init()
+{
+//    glEnable(GL_DEPTH_TEST);
+    
+    // 初始化摄像机
+    m_pCamera = new Camera();
+    m_pCamera->setDelta(&m_deltaTime);
+    
+    _initShader("resources/shader/light_0_0.vs", "resources/shader/light_0_0.fs");
+    m_pLightShader = new LEARN_OPEN_GL::Shader("resources/shader/light_0_1.vs", "resources/shader/light_0_1.fs");
+    
+    _bindData();
+}
+
+void lightColor::_bindData()
+{
+    glGenVertexArrays(1, &m_objectVAO);
+    glGenBuffers(1, &m_objectVBO);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_objectVBO);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(LEARN_OPEN_GL::cubeVertices),
+                 LEARN_OPEN_GL::cubeVertices,
+                 GL_STATIC_DRAW);
+    
+    glBindVertexArray(m_objectVAO);
+    
+    //设置顶点属性
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    
+    //设置光源的VAO
+    glGenVertexArrays(1, &m_ligthVAO);
+    glBindVertexArray(m_ligthVAO);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_objectVBO);
+    
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+}
+
+void lightColor::draw()
+{
+    //清除深度缓冲
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    m_pShader->use();
+    // 设置各个矩阵
+    glm::mat4 view = m_pCamera->GetViewMatrix();
+    m_pShader->setMat4("view", view);
+    
+    glm::mat4 projection = glm::perspective(glm::radians(m_pCamera->zoom()), (float)(LEARN_OPEN_GL::SCR_WIDTH/LEARN_OPEN_GL::SCR_HEIGHT), 0.1f, 100.f);
+    m_pShader->setMat4("projection", projection);
+    
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::scale(model, glm::vec3(0.5f));
+    m_pShader->setMat4("model", model);
+    
+    //设置物体 光颜色
+    m_pShader->setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+    m_pShader->setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
+    
+    glBindVertexArray(m_objectVAO);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+    
+    //设置光源
+    m_pLightShader->use();
+    
+    glm::vec3 lightPos(0.6f, 0.6f, 0.6f);
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, lightPos);
+    model = glm::scale(model, glm::vec3(0.2f));
+    m_pLightShader->setMat4("model", model);
+    
+    m_pLightShader->setMat4("view", view);
+    m_pLightShader->setMat4("projection", projection);
+    
+    glBindVertexArray(m_ligthVAO);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+    
+}
+
+void lightColor::clear()
+{
+    
+}
