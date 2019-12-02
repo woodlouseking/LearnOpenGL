@@ -127,7 +127,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1242"
-            endingLineNumber = "1242">
+            endingLineNumber = "1242"
+            landmarkName = "lightColor::clear()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
