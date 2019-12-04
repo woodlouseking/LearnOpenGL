@@ -340,4 +340,29 @@ private:
     
 };
 
+// 漫反射光照
+class ReflectLighting : public render
+{
+public:
+    void init() override;
+    void clear() override;
+    
+protected:
+    void draw() override;
+    
+private:
+    void _bindData();
+
+private:
+    GLuint m_objectVAO;
+    GLuint m_objectVBO;
+    
+    GLuint m_ligthVAO;
+    
+    //光照着色器
+    LEARN_OPEN_GL::Shader *m_pLightShader;
+    
+};
+
+
 #endif /* my_render_h */

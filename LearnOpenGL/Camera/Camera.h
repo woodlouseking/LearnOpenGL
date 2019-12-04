@@ -42,6 +42,10 @@ public:
         m_pDeltaTime = delta;
     }
     
+    glm::vec3 getPos()const {
+        return m_cameraPos;
+    }
+    
 private:
     void updateCameraVectors();
     

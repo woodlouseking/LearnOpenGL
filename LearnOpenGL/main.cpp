@@ -83,7 +83,8 @@ int main()
 //    manualCamera render; // 手动控制摄像机
 //    lightColor render; // 光照场景
 //    AmbientLight render; // 环境光照
-    DiffuseLighting render; // 漫反射光照
+//    DiffuseLighting render; // 漫反射光照
+    ReflectLighting render; // 镜面反射光照
     render.init();
     
     if (render.getCamera()) {
