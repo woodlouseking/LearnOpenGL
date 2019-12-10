@@ -85,7 +85,8 @@ int main()
 //    AmbientLight render; // 环境光照
 //    DiffuseLighting render; // 漫反射光照
 //    ReflectLighting render; // 镜面反射光照
-    MoveLight render; // 移动光源
+//    MoveLight render; // 移动光源
+    UseMaterial render; // 应用材质
     render.init();
     
     if (render.getCamera()) {

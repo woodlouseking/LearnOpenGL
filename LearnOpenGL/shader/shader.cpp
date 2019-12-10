@@ -95,6 +95,11 @@ void Shader::setVec3(const std::string &name, const glm::vec3 &value)const
     glUniform3fv(loc, 1, &value[0]);
 }
 
+void Shader::setVec3(const std::string &name, float x, float y, float z)const
+{
+    GLint loc = glGetUniformLocation(ID, name.c_str());
+    glUniform3f(loc, x, y, z);
+}
 void Shader::checkCompileErrors(unsigned int shader, std::string type)
 {
     int success;
