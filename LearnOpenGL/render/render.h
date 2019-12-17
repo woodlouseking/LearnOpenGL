@@ -480,4 +480,32 @@ private:
 };
 
 
+// 镜面贴图
+class SpecularTexture : public render
+{
+public:
+    void init() override;
+    void clear() override;
+    
+protected:
+    void draw() override;
+    
+private:
+    void _bindData();
+    
+private:
+    GLuint m_objectVAO;
+    GLuint m_objectVBO;
+    
+    GLuint m_ligthVAO;
+    
+    //光照着色器
+    LEARN_OPEN_GL::Shader *m_pLightShader;
+    renderTexture *m_pTex1;
+    renderTexture *m_pTex2;
+    
+};
+
+
+
 #endif /* my_render_h */
