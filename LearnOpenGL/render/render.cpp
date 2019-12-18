@@ -2230,3 +2230,137 @@ void SpecularTexture::clear()
         m_pTex2 = NULL;
     }
 }
+
+
+// 定向光
+void DirectionalLight::init()
+{
+    glEnable(GL_DEPTH_TEST);
+    
+    // 初始化摄像机
+    m_pCamera = new Camera();
+    m_pCamera->setDelta(&m_deltaTime);
+    
+    _initShader("resources/shader/light_5_ DirectionalLight.vs", "resources/shader/light_5_ DirectionalLight.fs");
+    
+    //分配纹理单元
+    m_pShader->use();
+    m_pShader->setInt("material.diffuse", 0);
+    m_pShader->setInt("material.specular", 1);
+    
+    //设置渲染图片
+    m_pTex1 = new renderTexture("resources/textures/container2.png", GL_RGBA);
+    m_pTex2 = new renderTexture("resources/textures/container2_specular.png", GL_RGBA);
+    
+    _bindData();
+}
+
+void DirectionalLight::_bindData()
+{
+    glGenVertexArrays(1, &m_objectVAO);
+    glGenBuffers(1, &m_objectVBO);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_objectVBO);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(LEARN_OPEN_GL::diffuseTexVertices),
+                 LEARN_OPEN_GL::diffuseTexVertices,
+                 GL_STATIC_DRAW);
+    
+    glBindVertexArray(m_objectVAO);
+    
+    //设置顶点属性
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(3*sizeof(float)));
+    glEnableVertexAttribArray(1);
+    
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
+    glEnableVertexAttribArray(2);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_objectVBO);
+    
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+}
+
+void DirectionalLight::draw()
+{
+    //清除深度缓冲
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    m_pShader->use();
+    
+    //设置观察者位置，以摄像机位置做为观察者位置
+    m_pShader->setVec3("viewPos", m_pCamera->getPos());
+    
+    // 设置光源的属性
+    m_pShader->setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
+    m_pShader->setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
+    m_pShader->setVec3("light.specular", 10.0f, 10.0f, 10.0f);
+    
+    //设置定向光的属性
+    m_pShader->setVec3("light.direction", -0.2f, -1.0f, -0.3f);
+    
+    //设置物体 光颜色
+    m_pShader->setVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+    m_pShader->setVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
+    m_pShader->setFloat("material.shininess", 32.0f);
+    
+    // 设置各个矩阵
+    glm::mat4 view = m_pCamera->GetViewMatrix();
+    m_pShader->setMat4("view", view);
+    
+    glm::mat4 projection = glm::perspective(glm::radians(m_pCamera->zoom()), (float)(LEARN_OPEN_GL::SCR_WIDTH/LEARN_OPEN_GL::SCR_HEIGHT), 0.1f, 100.f);
+    m_pShader->setMat4("projection", projection);
+    
+    // 绑定纹理
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, m_pTex1->textureId);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, m_pTex2->textureId);
+    
+    glBindVertexArray(m_objectVAO);
+    
+    //不同的世界坐标
+    glm::vec3 cubePositions[] = {
+        glm::vec3( 0.0f,  0.0f,  0.0f),
+        glm::vec3( 2.0f,  5.0f, -15.0f),
+        glm::vec3(-1.5f, -2.2f, -2.5f),
+        glm::vec3(-3.8f, -2.0f, -12.3f),
+        glm::vec3( 2.4f, -0.4f, -3.5f),
+        glm::vec3(-1.7f,  3.0f, -7.5f),
+        glm::vec3( 1.3f, -2.0f, -2.5f),
+        glm::vec3( 1.5f,  2.0f, -2.5f),
+        glm::vec3( 1.5f,  0.2f, -1.5f),
+        glm::vec3(-1.3f,  1.0f, -1.5f)
+    };
+    
+    for(int i=0; i<10; i++) {
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, cubePositions[i]);
+        model = glm::rotate(model, glm::radians(20.0f *float(glfwGetTime())), glm::vec3(1.0f, 0.3f, 0.5f));
+        model = glm::scale(model, glm::vec3(0.5f));
+        m_pShader->setMat4("model", model);
+        
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
+    
+    glBindVertexArray(0);
+}
+
+void DirectionalLight::clear()
+{
+    glDeleteBuffers(1, &m_objectVBO);
+    glDeleteVertexArrays(1, &m_objectVAO);
+    
+    if (m_pTex1) {
+        delete m_pTex1;
+        m_pTex1 = NULL;
+    }
+    if (m_pTex2) {
+        delete m_pTex2;
+        m_pTex2 = NULL;
+    }
+}
+

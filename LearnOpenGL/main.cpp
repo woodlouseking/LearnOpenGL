@@ -90,7 +90,8 @@ int main()
 //    UseMaterialLight render; // 应用材质、光属性
 //    UseRandomLight render; // 随机光源
 //    DiffuseTexture render; // 漫反射贴图
-    SpecularTexture render; // 镜面贴图
+//    SpecularTexture render; // 镜面贴图
+    DirectionalLight render; // 定向光
     render.init();
     
     if (render.getCamera()) {
