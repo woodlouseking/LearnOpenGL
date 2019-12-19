@@ -91,7 +91,8 @@ int main()
 //    UseRandomLight render; // 随机光源
 //    DiffuseTexture render; // 漫反射贴图
 //    SpecularTexture render; // 镜面贴图
-    DirectionalLight render; // 定向光
+//    DirectionalLight render; // 定向光
+    AttenuationLight render; // 点光、衰减
     render.init();
     
     if (render.getCamera()) {
