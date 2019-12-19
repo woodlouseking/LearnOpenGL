@@ -46,6 +46,10 @@ public:
         return m_cameraPos;
     }
     
+    glm::vec3 getFront()const {
+        return m_cameraFront;
+    }
+    
 private:
     void updateCameraVectors();
     

@@ -92,7 +92,8 @@ int main()
 //    DiffuseTexture render; // 漫反射贴图
 //    SpecularTexture render; // 镜面贴图
 //    DirectionalLight render; // 定向光
-    AttenuationLight render; // 点光、衰减
+//    AttenuationLight render; // 点光、衰减
+    FlashLight render; // 手电筒光
     render.init();
     
     if (render.getCamera()) {
