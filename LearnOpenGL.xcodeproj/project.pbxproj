@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9A1228CD2376D726007C5230 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A1228CC2376D726007C5230 /* stb_image.cpp */; };
+		9A854C3E23BE30AC00D86D23 /* libassimp.3.1.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A854C3D23BE30AB00D86D23 /* libassimp.3.1.1.dylib */; };
+		9A854C4423C4CB0C00D86D23 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A854C4023C4CB0C00D86D23 /* Mesh.cpp */; };
+		9A854C4523C4CB0C00D86D23 /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A854C4223C4CB0C00D86D23 /* Model.cpp */; };
 		9A86AD402377BB5400159810 /* renderTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A86AD3E2377BB5400159810 /* renderTexture.cpp */; };
 		9AA5EFBF2371C4AA0020ECE8 /* render.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5EFBD2371C4AA0020ECE8 /* render.cpp */; };
 		9AA5EFC7237315C20020ECE8 /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AA5EFC6237315C20020ECE8 /* shader.cpp */; };
@@ -410,6 +413,11 @@
 		9A62AD612379B4D300E62C5A /* rotate_normalized_axis.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = rotate_normalized_axis.hpp; sourceTree = "<group>"; };
 		9A62AD622379B4D300E62C5A /* projection.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = projection.inl; sourceTree = "<group>"; };
 		9A62AD632379B4D300E62C5A /* type_aligned.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = type_aligned.hpp; sourceTree = "<group>"; };
+		9A854C3D23BE30AB00D86D23 /* libassimp.3.1.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.3.1.1.dylib; path = ../../../../../usr/local/lib/libassimp.3.1.1.dylib; sourceTree = "<group>"; };
+		9A854C4023C4CB0C00D86D23 /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		9A854C4123C4CB0C00D86D23 /* Model.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Model.hpp; sourceTree = "<group>"; };
+		9A854C4223C4CB0C00D86D23 /* Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
+		9A854C4323C4CB0C00D86D23 /* Mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
 		9A86AD3E2377BB5400159810 /* renderTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = renderTexture.cpp; sourceTree = "<group>"; };
 		9A86AD412377BB7E00159810 /* renderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renderTexture.h; sourceTree = "<group>"; };
 		9AA5EFBD2371C4AA0020ECE8 /* render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render.cpp; sourceTree = "<group>"; };
@@ -437,6 +445,7 @@
 			files = (
 				9ACE319B236D8AC400321C8C /* libGLEW.2.1.0.dylib in Frameworks */,
 				9ACE319C236D8AC400321C8C /* libglfw.3.3.dylib in Frameworks */,
+				9A854C3E23BE30AC00D86D23 /* libassimp.3.1.1.dylib in Frameworks */,
 				9ACE3198236D8AB600321C8C /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -864,6 +873,17 @@
 			path = gtx;
 			sourceTree = "<group>";
 		};
+		9A854C3F23C4CB0C00D86D23 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9A854C4023C4CB0C00D86D23 /* Mesh.cpp */,
+				9A854C4123C4CB0C00D86D23 /* Model.hpp */,
+				9A854C4223C4CB0C00D86D23 /* Model.cpp */,
+				9A854C4323C4CB0C00D86D23 /* Mesh.hpp */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		9AA5EFBC2371C4AA0020ECE8 /* render */ = {
 			isa = PBXGroup;
 			children = (
@@ -914,6 +934,7 @@
 		9ACE318C236D8A6100321C8C /* LearnOpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				9A854C3F23C4CB0C00D86D23 /* Model */,
 				9AD590482392B5AA00531910 /* Camera */,
 				9AB4265323844CF4003C9BC9 /* input */,
 				9AA5EFC4237315C20020ECE8 /* shader */,
@@ -928,6 +949,7 @@
 		9ACE3196236D8AB600321C8C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9A854C3D23BE30AB00D86D23 /* libassimp.3.1.1.dylib */,
 				9ACE3199236D8AC400321C8C /* libGLEW.2.1.0.dylib */,
 				9ACE319A236D8AC400321C8C /* libglfw.3.3.dylib */,
 				9ACE3197236D8AB600321C8C /* OpenGL.framework */,
@@ -1019,12 +1041,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A854C4423C4CB0C00D86D23 /* Mesh.cpp in Sources */,
 				9AA5EFBF2371C4AA0020ECE8 /* render.cpp in Sources */,
 				9A86AD402377BB5400159810 /* renderTexture.cpp in Sources */,
 				9ACE3195236D8A8300321C8C /* main.cpp in Sources */,
 				9A1228CD2376D726007C5230 /* stb_image.cpp in Sources */,
 				9AD5904B2392B5AA00531910 /* Camera.cpp in Sources */,
 				9AA5EFC7237315C20020ECE8 /* shader.cpp in Sources */,
+				9A854C4523C4CB0C00D86D23 /* Model.cpp in Sources */,
 				9AB4265A23845327003C9BC9 /* userInput.cpp in Sources */,
 				9ACE31A4236D8B7100321C8C /* glad.c in Sources */,
 			);
@@ -1158,6 +1182,7 @@
 					"$(inherited)",
 					/usr/local/Cellar/glew/2.1.0/lib,
 					/usr/local/Cellar/glfw/3.3/lib,
+					/usr/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1179,6 +1204,7 @@
 					"$(inherited)",
 					/usr/local/Cellar/glew/2.1.0/lib,
 					/usr/local/Cellar/glfw/3.3/lib,
+					/usr/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -18,6 +18,11 @@
 #include "stb_image.h"
 #include "userInput.h"
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -37,6 +42,10 @@ void scrollCallBack(GLFWwindow *window, double xoff, double yoff)
 
 int main()
 {
+    //测试加载模型
+    Assimp::Importer importer;
+    const aiScene *scene = importer.ReadFile("aaaa", aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
