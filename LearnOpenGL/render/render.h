@@ -608,4 +608,21 @@ private:
 };
 
 
+class Model;
+
+// 模型渲染
+class ModelRender : public render
+{
+public:
+    void init() override;
+    void clear() override;
+    
+protected:
+    void draw() override;
+    
+private:
+    Model *m_pModel;
+    
+};
+
 #endif /* my_render_h */

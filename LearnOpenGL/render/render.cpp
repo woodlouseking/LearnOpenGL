@@ -2867,3 +2867,23 @@ void MultiLight::clear()
     }
 }
 
+
+// 模型渲染
+void ModelRender::init()
+{
+    // 初始化shader
+    _initShader("resources/shader/model_0_0.vs", "resources/shader/model_0_0.fs");
+    
+    // 模型
+    m_pModel = new Model("resources/objects/nanosuit/nanosuit.obj");
+    
+}
+void ModelRender::draw()
+{
+    
+}
+
+void ModelRender::clear()
+{
+    
+}

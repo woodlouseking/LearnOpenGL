@@ -103,7 +103,8 @@ int main()
 //    DirectionalLight render; // 定向光
 //    AttenuationLight render; // 点光、衰减
 //    FlashLight render; // 手电筒光
-    MultiLight render; // 多光源
+//    MultiLight render; // 多光源
+    ModelRender render; // 模型渲染
     render.init();
     
     if (render.getCamera()) {
