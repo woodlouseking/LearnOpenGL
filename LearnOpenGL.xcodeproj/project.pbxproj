@@ -22,6 +22,7 @@
 		9ACE31A4236D8B7100321C8C /* glad.c in Sources */ = {isa = PBXBuildFile; fileRef = 9ACE31A3236D8B7100321C8C /* glad.c */; };
 		9ACE31A6236D8BB900321C8C /* resources in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9ACE31A5236D8BAA00321C8C /* resources */; };
 		9AD5904B2392B5AA00531910 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9AD590492392B5AA00531910 /* Camera.cpp */; };
+		9AF85ED623CCC0180052B55F /* libSOIL.1.07.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AF85ED523CCC0180052B55F /* libSOIL.1.07.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -418,6 +419,7 @@
 		9A854C4123C4CB0C00D86D23 /* Model.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Model.hpp; sourceTree = "<group>"; };
 		9A854C4223C4CB0C00D86D23 /* Model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
 		9A854C4323C4CB0C00D86D23 /* Mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
+		9A854C4723C4D0A500D86D23 /* libSOIL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSOIL.a; path = LearnOpenGL/lib/libSOIL.a; sourceTree = "<group>"; };
 		9A86AD3E2377BB5400159810 /* renderTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = renderTexture.cpp; sourceTree = "<group>"; };
 		9A86AD412377BB7E00159810 /* renderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renderTexture.h; sourceTree = "<group>"; };
 		9AA5EFBD2371C4AA0020ECE8 /* render.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render.cpp; sourceTree = "<group>"; };
@@ -436,6 +438,8 @@
 		9ACE31A9236D8CAB00321C8C /* const.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = const.h; sourceTree = "<group>"; };
 		9AD590492392B5AA00531910 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		9AD5904A2392B5AA00531910 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		9AF85ED123C4D3950052B55F /* libSOIL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSOIL.a; path = ../../../../../usr/local/lib/libSOIL.a; sourceTree = "<group>"; };
+		9AF85ED523CCC0180052B55F /* libSOIL.1.07.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSOIL.1.07.dylib; path = ../../../../../usr/local/lib/libSOIL.1.07.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -445,6 +449,7 @@
 			files = (
 				9ACE319B236D8AC400321C8C /* libGLEW.2.1.0.dylib in Frameworks */,
 				9ACE319C236D8AC400321C8C /* libglfw.3.3.dylib in Frameworks */,
+				9AF85ED623CCC0180052B55F /* libSOIL.1.07.dylib in Frameworks */,
 				9A854C3E23BE30AC00D86D23 /* libassimp.3.1.1.dylib in Frameworks */,
 				9ACE3198236D8AB600321C8C /* OpenGL.framework in Frameworks */,
 			);
@@ -949,6 +954,9 @@
 		9ACE3196236D8AB600321C8C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9AF85ED523CCC0180052B55F /* libSOIL.1.07.dylib */,
+				9A854C4723C4D0A500D86D23 /* libSOIL.a */,
+				9AF85ED123C4D3950052B55F /* libSOIL.a */,
 				9A854C3D23BE30AB00D86D23 /* libassimp.3.1.1.dylib */,
 				9ACE3199236D8AC400321C8C /* libGLEW.2.1.0.dylib */,
 				9ACE319A236D8AC400321C8C /* libglfw.3.3.dylib */,
@@ -1183,6 +1191,8 @@
 					/usr/local/Cellar/glew/2.1.0/lib,
 					/usr/local/Cellar/glfw/3.3/lib,
 					/usr/local/lib,
+					"$(PROJECT_DIR)/LearnOpenGL/lib",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1205,6 +1215,8 @@
 					/usr/local/Cellar/glew/2.1.0/lib,
 					/usr/local/Cellar/glfw/3.3/lib,
 					/usr/local/lib,
+					"$(PROJECT_DIR)/LearnOpenGL/lib",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

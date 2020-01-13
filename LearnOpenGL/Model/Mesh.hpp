@@ -13,10 +13,11 @@
 
 #include <string>
 #include <vector>
-#include <GL/glew.h>
+//#include <GL/glew.h>
 #include "glm.hpp"
 #include "matrix_transform.hpp"
 #include "shader.h"
+#include <GLFW/glfw3.h>
 
 using namespace std;
 

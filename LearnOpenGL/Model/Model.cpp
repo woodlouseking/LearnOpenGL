@@ -9,6 +9,7 @@
 #include "Model.hpp"
 #include <iostream>
 #include <SOIL.h>
+#include <glad/glad.h>
 
 Model::Model(string path)
 {

@@ -14,6 +14,7 @@
 #include "glm.hpp"
 #include "userInput.h"
 #include "Camera.h"
+#include "Model.hpp"
 
 class renderTexture;
 
