@@ -19,7 +19,7 @@ Mesh::Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> text
     this->setupMesh();
 }
 
-void Mesh::Draw(LEARN_OPEN_GL::Shader &shader)
+void Mesh::Draw(LEARN_OPEN_GL::Shader* shader)
 {
     // Bind appropriate textures
     GLuint diffuseNr = 1;
@@ -38,13 +38,13 @@ void Mesh::Draw(LEARN_OPEN_GL::Shader &shader)
         }
         number = ss.str();
         // Now set the sampler to the correct texture unit
-        glUniform1f(glGetUniformLocation(shader.ID, (name+number).c_str()), i);
+        glUniform1f(glGetUniformLocation(shader->ID, (name+number).c_str()), i);
         // And finally bind the texture
         glBindTexture(GL_TEXTURE_2D, this->textures[i].id);
     }
     
     //Also set each mesh's shininess property to a default value
-    glUniform1f(glGetUniformLocation(shader.ID, "material.shiness"), 16.0f);
+    glUniform1f(glGetUniformLocation(shader->ID, "material.shiness"), 16.0f);
     
     //Draw Mesh
     glBindVertexArray(this->VAO);

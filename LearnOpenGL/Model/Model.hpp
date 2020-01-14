@@ -21,7 +21,7 @@ class Model
 {
 public:
     Model(string path);
-    void Draw(LEARN_OPEN_GL::Shader shader);
+    void Draw(LEARN_OPEN_GL::Shader* shader);
     
 private:
     vector<Mesh> meshes;

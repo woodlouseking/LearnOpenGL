@@ -2871,16 +2871,38 @@ void MultiLight::clear()
 // 模型渲染
 void ModelRender::init()
 {
+    glEnable(GL_DEPTH_TEST);
+    
     // 初始化shader
     _initShader("resources/shader/model_0_0.vs", "resources/shader/model_0_0.fs");
     
     // 模型
     m_pModel = new Model("resources/objects/nanosuit/nanosuit.obj");
+//    m_pModel = new Model("resources/objects/cyborg/cyborg.obj");
     
+    m_pCamera = new Camera();
+    m_pCamera->setDelta(&m_deltaTime);
 }
 void ModelRender::draw()
 {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+ 
+    m_pShader->use();
     
+    glm::mat4 projection = glm::perspective(m_pCamera->zoom(),
+                                            float(LEARN_OPEN_GL::SCR_WIDTH/LEARN_OPEN_GL::SCR_HEIGHT),
+                                            0.1f,
+                                            100.0f);
+    glm::mat4 view = m_pCamera->GetViewMatrix();
+    m_pShader->setMat4("projection", projection);
+    m_pShader->setMat4("view", view);
+    
+    glm::mat4 model(1.0f);
+    model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f));
+    model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+    m_pShader->setMat4("model", model);
+    
+    m_pModel->Draw(m_pShader);
 }
 
 void ModelRender::clear()

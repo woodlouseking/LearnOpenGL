@@ -38,7 +38,7 @@ class Mesh {
 public:
     Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures);
     
-    void Draw(LEARN_OPEN_GL::Shader &shader);
+    void Draw(LEARN_OPEN_GL::Shader* shader);
     
 public:
     vector<Vertex> vertices;

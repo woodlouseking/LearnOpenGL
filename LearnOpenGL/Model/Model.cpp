@@ -16,7 +16,7 @@ Model::Model(string path)
     this->loadModel(path);
 }
 
-void Model::Draw(LEARN_OPEN_GL::Shader shader)
+void Model::Draw(LEARN_OPEN_GL::Shader* shader)
 {
     for (int i=0; i<this->meshes.size(); i++) {
         this->meshes[i].Draw(shader);
