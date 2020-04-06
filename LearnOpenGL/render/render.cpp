@@ -2909,3 +2909,170 @@ void ModelRender::clear()
 {
     
 }
+
+/*
+ ** 模板测试
+*/
+void StencilTestRender::init()
+{
+    
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glEnable(GL_STENCIL_TEST);
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    
+    // 初始化摄像机
+    m_pCamera = new Camera();
+    m_pCamera->setDelta(&m_deltaTime);
+    
+    // 初始化默认的着色器，适用于箱子的渲染
+    _initShader("resources/shader/stencil_test_0.vs", "resources/shader/stencil_test_0.fs");
+    // 单色着色器
+    m_singleColorShader = new LEARN_OPEN_GL::Shader("resources/shader/stencil_test_0.vs", "resources/shader/stencil_test_0_singleColor.fs");
+    
+    bindData();
+}
+
+
+void StencilTestRender::bindData()
+{
+    //绑定数据
+    // 箱子数据
+    glGenVertexArrays(1, &m_cubeVAO);
+    glGenBuffers(1, &m_cubeVBO);
+    
+    glBindVertexArray(m_cubeVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, m_cubeVBO);
+    
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(LEARN_OPEN_GL::stencilTestCubeVertices),
+                 &LEARN_OPEN_GL::stencilTestCubeVertices,
+                 GL_STATIC_DRAW);
+    
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (GLvoid*)0);
+    
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (GLvoid*)(3*sizeof(GLfloat)));
+    glBindVertexArray(0);
+    
+    // floor data
+    glGenVertexArrays(1, &m_planeVAO);
+    glGenBuffers(1, &m_planeVBO);
+    
+    glBindVertexArray(m_planeVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, m_planeVBO);
+    
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(LEARN_OPEN_GL::stencilTestPlaneVertices),
+                 &LEARN_OPEN_GL::stencilTestPlaneVertices,
+                 GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (GLvoid*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), (GLvoid*)(3*sizeof(GLfloat)));
+    glBindVertexArray(0);
+    
+    // 初始化纹理
+    m_pCubeTexture = new renderTexture("resources/textures/marble.jpg", GL_RGB); // CUBE
+    m_pFloorTexture = new renderTexture("resources/textures/metal.png", GL_RGB); // FLOOR
+    
+}
+
+void StencilTestRender::draw()
+{
+    clearScreen();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    
+    m_singleColorShader->use();
+    glm::mat4 model;
+    glm::mat4 view = m_pCamera->GetViewMatrix();
+    glm::mat4 projection = glm::perspective(m_pCamera->zoom(),
+                                            (float)LEARN_OPEN_GL::SCR_WIDTH/(float)LEARN_OPEN_GL::SCR_HEIGHT,
+                                            0.1f,
+                                            100.0f);
+    m_singleColorShader->setMat4("view", view);
+    m_singleColorShader->setMat4("projection", projection);
+    
+    m_pShader->use();
+    m_pShader->setMat4("view", view);
+    m_pShader->setMat4("projection", projection);
+    
+    
+    // floor
+    glStencilMask(0x00);
+    
+    glBindVertexArray(m_planeVAO);
+    glBindTexture(GL_TEXTURE_2D, m_pFloorTexture->textureId);
+    model = glm::mat4(1.0f);
+    m_pShader->setMat4("model", model);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(0);
+    
+    // cube
+    // 1st. Render pass, draw objects as normal, filling the stencil buffer
+    glStencilFunc(GL_ALWAYS, 1, 0xFF);
+    glStencilMask(0xFF);
+    // Cubes
+    glBindVertexArray(m_cubeVAO);
+    glBindTexture(GL_TEXTURE_2D, m_pCubeTexture->textureId);
+    model = glm::translate(model, glm::vec3(1.0f, 1.0f, 1.0f));
+    m_pShader->setMat4("model", model);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
+    m_pShader->setMat4("model", model);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+    
+    //2nd. Render pass, now draw slightly scaled versions of the objects, this time disabling stencil writing
+    // Because stencil buffer is now filled with serveral 1s. The parts of the buffer that are 1 are now not drawn, thus only drawing
+    // the objects' size differences, making it look like borders
+    glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+    glStencilMask(0x00);
+    glDisable(GL_DEPTH_TEST);
+    
+    m_singleColorShader->use();
+    float scale = 1.05;
+    // cubs
+    glBindVertexArray(m_cubeVAO);
+    glBindTexture(GL_TEXTURE_2D, m_pCubeTexture->textureId);
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(1.0f, 1.0f, 1.0f));
+    model = glm::scale(model, glm::vec3(scale, scale, scale));
+    m_singleColorShader->setMat4("model", model);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::scale(model, glm::vec3(scale, scale, scale));
+    m_singleColorShader->setMat4("model", model);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+    
+    glStencilMask(0xFF);
+    glEnable(GL_DEPTH_TEST);
+    
+    
+}
+
+void StencilTestRender::clear()
+{
+    glDeleteBuffers(1, &m_cubeVBO);
+    glDeleteBuffers(1, &m_planeVBO);
+    glDeleteVertexArrays(1, &m_cubeVAO);
+    glDeleteVertexArrays(1, &m_planeVAO);
+    
+    if (m_pCubeTexture) {
+        delete m_pCubeTexture;
+        m_pCubeTexture = nullptr;
+    }
+    
+    if (m_pFloorTexture) {
+        delete m_pFloorTexture;
+        m_pFloorTexture = nullptr;
+    }
+
+}

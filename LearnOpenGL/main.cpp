@@ -100,7 +100,9 @@ int main()
 //    AttenuationLight render; // 点光、衰减
 //    FlashLight render; // 手电筒光
 //    MultiLight render; // 多光源
-    ModelRender render; // 模型渲染
+//    ModelRender render; // 模型渲染
+    StencilTestRender render; // 模板测试
+    
     render.init();
     
     if (render.getCamera()) {

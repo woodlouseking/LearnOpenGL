@@ -625,4 +625,34 @@ private:
     
 };
 
+// 模板测试
+class StencilTestRender : public render
+{
+public:
+    void init() override;
+    void clear() override;
+    
+protected:
+    void draw() override;
+    
+private:
+    void bindData();
+    
+private:
+    // 箱子属性
+    GLuint m_cubeVAO;
+    GLuint m_cubeVBO;
+    
+    // 地板属性
+    GLuint m_planeVAO;
+    GLuint m_planeVBO;
+    
+    // 纹理
+    renderTexture *m_pCubeTexture; // 箱子纹理
+    renderTexture *m_pFloorTexture; // 地板纹理
+    
+    // 着色器
+    LEARN_OPEN_GL::Shader *m_singleColorShader; // 单色着色器
+};
+
 #endif /* my_render_h */
